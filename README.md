@@ -1,5 +1,5 @@
 # rand
-An awesome random generator for the terminal
+An awesome random generator for the terminal **which is currently in the developing process.** Please watch this repository to get informed when the first release is available.
 
 ## Supported commands:
 ```
