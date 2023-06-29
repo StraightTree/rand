@@ -1,6 +1,3 @@
-//
-// Created by david on 29/06/23.
-//
 #include "utility.hpp"
 
 namespace Util
