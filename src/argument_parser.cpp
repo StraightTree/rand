@@ -28,15 +28,7 @@ void ArgumentParser::getSplitUpArguments(std::vector<std::pair<std::string, std:
     arg_list.emplace_back(tmp.substr(0, p), tmp.substr(p+1, tmp.length()-p));
   }
 }
-/*
-bool ArgumentParser::strToUnsignedInt(std::string string)
-{
-  std::istringstream iss(string);
-  float f;
-  iss >> std::noskipws >> f;
-  // Check the entire string was consumed and if either failbit or badbit is set
-  return iss.eof() && !iss.fail();
-}*/
+
 
 void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
 {
