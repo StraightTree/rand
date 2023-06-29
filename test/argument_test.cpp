@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../argument.cpp"
+#include "../inc/argument_parser.hpp"
 
 class TestArgument : public ::testing::Test
 {};
@@ -117,4 +117,14 @@ TEST(TestArgument, ArgumentStringConstructor)
 
   arg = "World";
   ASSERT_EQ(*reinterpret_cast<std::string*>(argument.getArgument()), arg);
+}
+
+TEST(TestArgument, TestDefaultValues)
+{
+  std::string arg{};
+  Argument argument("", "", "", arg);
+  ASSERT_FALSE(argument.providedByUser());
+
+  ASSERT_NO_THROW(argument.setProvidedByUser());
+  ASSERT_TRUE(argument.providedByUser());
 }
