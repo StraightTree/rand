@@ -49,3 +49,100 @@ TEST(TestUtil, TestTrimInternalBlanks)
     const std::string result_string = Util::trim(some_text_with_internal_blank);
     ASSERT_EQ(result_string, some_text_with_internal_blank);
 }
+
+TEST(TestUtil, strToNumericTypeSignedValidMax)
+{
+    using arg_type = ssize_t;
+    arg_type value{std::numeric_limits<arg_type>::max()};
+    const std::string str_value {std::to_string(value)};
+    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+}
+
+TEST(TestUtil, strToNumericTypeSignedValidMin)
+{
+    using arg_type = ssize_t;
+    arg_type value{std::numeric_limits<arg_type>::min()};
+    const std::string str_value {std::to_string(value)};
+    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+}
+
+TEST(TestUtil, strToNumericTypeSignedInvalid)
+{
+    using arg_type = ssize_t;
+    const std::string str_value {"asdf"};
+    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+}
+
+TEST(TestUtil, strToNumericTypeSignedEmpty)
+{
+    using arg_type = ssize_t;
+    const std::string str_value {};
+    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), 0));
+}
+
+TEST(TestUtil, strToNumericTypeUnsignedValidMax)
+{
+    using arg_type = size_t;
+    arg_type value{std::numeric_limits<arg_type>::max()};
+    const std::string str_value {std::to_string(value)};
+    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+}
+
+TEST(TestUtil, strToNumericTypeUnsignedValidMin)
+{
+    using arg_type = size_t;
+    arg_type value{std::numeric_limits<arg_type>::min()};
+    const std::string str_value {std::to_string(value)};
+    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+}
+
+TEST(TestUtil, strToNumericTypeUnsignedInvalid1)
+{
+    using arg_type = size_t;
+    const std::string str_value {"asdf"};
+    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+}
+
+TEST(TestUtil, strToNumericTypeUnsignedInvalid2)
+{
+    using arg_type = size_t;
+    const std::string str_value {"-1"};
+    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+}
+
+TEST(TestUtil, strToNumericTypeUnsignedEmpty)
+{
+    using arg_type = size_t;
+    const std::string str_value {};
+    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), 0));
+}
+
+TEST(TestUtil, strToNumericTypeFloatValidMax)
+{
+    using arg_type = double;
+    arg_type value{std::numeric_limits<arg_type>::max()};
+    const std::string str_value {std::to_string(value)};
+    ASSERT_NO_THROW(ASSERT_DOUBLE_EQ(Util::strToNumericType<arg_type>(str_value), value));
+}
+
+TEST(TestUtil, strToNumericTypeFloatValidMin)
+{
+    using arg_type = double;
+    arg_type value{std::numeric_limits<arg_type>::min()};
+    const std::string str_value {std::to_string(value)};
+    ASSERT_NO_THROW(ASSERT_TRUE(std::abs(Util::strToNumericType<arg_type>(str_value) - value) < std::numeric_limits<arg_type>::epsilon()));
+}
+
+TEST(TestUtil, strToNumericTypeFloatInvalid1)
+{
+    using arg_type = double;
+    const std::string str_value {"asdf"};
+    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+}
+
+TEST(TestUtil, strToNumericTypeFloatEmpty)
+{
+    using arg_type = double;
+    const std::string str_value {};
+    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), 0));
+}
