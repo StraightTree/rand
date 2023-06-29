@@ -94,7 +94,7 @@ std::vector<Argument> ArgumentParser::getUserArguments()
     if (it == supported_arguments_.cend())
       continue;
 
-    parseArgument(*it, arg_pair.second);
+    parseArgument(*it, Util::trim(arg_pair.second));
     provided_arguments.emplace_back(*it);
   }
   return provided_arguments;
