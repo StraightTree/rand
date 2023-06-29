@@ -418,7 +418,30 @@ TEST(TestParseArgument, getUserArgumentsVerbose)
   ASSERT_EQ(provided_arguments.at(1), arg3);
 }
 
-TEST(TestParseArgument, getUserArgumentsInvalidArg)
+TEST(TestParseArgument, getUserArgumentsVerboseMultipleBlanks)
+{
+    ssize_t numbers{};
+    Argument arg1{"n", "numbers", "", numbers};
+
+    size_t count{};
+    Argument arg2{"c", "count", "", count};
+
+    std::string file{};
+    Argument arg3{"f", "file", "", file};
+
+    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+    std::string terminal_args{"-n     43     -file some_file.txt"};
+    ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+    std::vector<Argument> provided_arguments{};
+    ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+    ASSERT_EQ(provided_arguments.size(), 2);
+    ASSERT_EQ(provided_arguments.at(0), arg1);
+    ASSERT_EQ(provided_arguments.at(1), arg3);
+}
+
+TEST(TestParseArgument, getUserArgumentsInvalidArg1)
 {
   ssize_t numbers{};
   Argument arg1{"n", "numbers", "", numbers};
@@ -439,4 +462,128 @@ TEST(TestParseArgument, getUserArgumentsInvalidArg)
   ASSERT_EQ(provided_arguments.size(), 2);
   ASSERT_EQ(provided_arguments.at(0), arg1);
   ASSERT_EQ(provided_arguments.at(1), arg3);
+}
+
+TEST(TestParseArgument, getUserArgumentsInvalidArg2)
+{
+    ssize_t numbers{};
+    Argument arg1{"n", "numbers", "", numbers};
+
+    size_t count{};
+    Argument arg2{"c", "count", "", count};
+
+    std::string file{};
+    Argument arg3{"f", "file", "", file};
+
+    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+    std::string terminal_args{"-nothing-to-do-here"};
+    ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+    std::vector<Argument> provided_arguments{};
+    ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+    ASSERT_TRUE(provided_arguments.empty());
+}
+
+TEST(TestParseArgument, getUserArgumentsInvalidArg3)
+{
+    ssize_t numbers{};
+    Argument arg1{"n", "numbers", "", numbers};
+
+    size_t count{};
+    Argument arg2{"c", "count", "", count};
+
+    std::string file{};
+    Argument arg3{"f", "file", "", file};
+
+    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+    std::string terminal_args{"-n some_invalid_value"};
+    ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+    std::vector<Argument> provided_arguments{};
+    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+}
+
+TEST(TestParseArgument, getUserArgumentsInvalidArg4)
+{
+    ssize_t numbers{};
+    Argument arg1{"n", "numbers", "", numbers};
+
+    size_t count{};
+    Argument arg2{"c", "count", "", count};
+
+    std::string file{};
+    Argument arg3{"f", "file", "", file};
+
+    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+    std::string terminal_args{"-n 3.14"};
+    ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+    std::vector<Argument> provided_arguments{};
+    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+}
+
+TEST(TestParseArgument, getUserArgumentsInvalidArg5)
+{
+    ssize_t numbers{};
+    Argument arg1{"n", "numbers", "", numbers};
+
+    size_t count{};
+    Argument arg2{"c", "count", "", count};
+
+    std::string file{};
+    Argument arg3{"f", "file", "", file};
+
+    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+    std::string terminal_args{"-n 3,14"};
+    ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+    std::vector<Argument> provided_arguments{};
+    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+}
+
+TEST(TestParseArgument, getUserArgumentsInvalidArg6)
+{
+    ssize_t numbers{};
+    Argument arg1{"n", "numbers", "", numbers};
+
+    size_t count{};
+    Argument arg2{"c", "count", "", count};
+
+    std::string file{};
+    Argument arg3{"f", "file", "", file};
+
+    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+    std::string terminal_args{"-n 3 32 43 23"};
+    ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+    std::vector<Argument> provided_arguments{};
+    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+}
+
+
+
+TEST(TestParseArgument, getUserArgumentsEmpty)
+{
+    ssize_t numbers{};
+    Argument arg1{"n", "numbers", "", numbers};
+
+    size_t count{};
+    Argument arg2{"c", "count", "", count};
+
+    std::string file{};
+    Argument arg3{"f", "file", "", file};
+
+    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+    std::string terminal_args{};
+    ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+    std::vector<Argument> provided_arguments{};
+    ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+    ASSERT_TRUE(provided_arguments.empty());
 }
