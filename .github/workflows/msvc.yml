@@ -10,7 +10,7 @@ name: Microsoft C++ Code Analysis
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "'**'" ]
   pull_request:
     branches: [ "main" ]
   schedule:
@@ -18,7 +18,7 @@ on:
 
 env:
   # Path to the CMake build directory.
-  build: '${{ github.workspace }}/build'
+  build: '${{ github.workspace }}/'
 
 permissions:
   contents: read
