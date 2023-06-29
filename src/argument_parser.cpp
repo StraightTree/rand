@@ -42,21 +42,21 @@ void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
     }
     case Argument::ArgumentType::FLOAT:
     {
-      const auto val = std::stod(value);
+      const auto val = Util::strToNumericType<double>(value);
       auto* double_ptr = reinterpret_cast<double*>(arg.getArgument());
       *double_ptr = val;
       break;
     }
     case Argument::ArgumentType::SIGNED_INTEGER:
     {
-      const auto val = std::stoll(value);
+      const auto val = Util::strToNumericType<ssize_t>(value);
       auto* signed_int_ptr = reinterpret_cast<ssize_t *>(arg.getArgument());
       *signed_int_ptr = val;
       break;
     }
     case Argument::ArgumentType::UNSIGNED_INTEGER:
     {
-      const auto val = std::stoull(value);
+      const auto val = Util::strToNumericType<size_t>(value);
       auto* unsigned_int_ptr = reinterpret_cast<size_t *>(arg.getArgument());
       *unsigned_int_ptr = val;
       break;
