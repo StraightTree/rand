@@ -10,7 +10,7 @@ name: Microsoft C++ Code Analysis
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "'**'" ]
   pull_request:
     branches: [ "main" ]
   schedule:
