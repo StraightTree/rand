@@ -271,7 +271,7 @@ TEST(TestParseArgument, parseArgumentUnsignedInt)
 
 TEST(TestParseArgument, parseArgumentUnsignedIntMaxValue)
 {
-  using arg_type = ssize_t;
+  using arg_type = size_t;
   arg_type value{};
   Argument arg{"","", "", value};
   const arg_type argument{std::numeric_limits<arg_type>::max()};
@@ -283,7 +283,7 @@ TEST(TestParseArgument, parseArgumentUnsignedIntMaxValue)
 
 TEST(TestParseArgument, parseArgumentUnsignedIntMinValue)
 {
-  using arg_type = ssize_t;
+  using arg_type = size_t;
   arg_type value{};
   Argument arg{"","", "", value};
   const arg_type argument{std::numeric_limits<arg_type>::min()};
@@ -295,7 +295,7 @@ TEST(TestParseArgument, parseArgumentUnsignedIntMinValue)
 
 TEST(TestParseArgument, parseArgumentUnsignedInvalidValue1)
 {
-  using arg_type = ssize_t;
+  using arg_type = size_t;
   arg_type value{};
   Argument arg{"","", "", value};
   std::string str_argument = "abcd";
@@ -306,7 +306,7 @@ TEST(TestParseArgument, parseArgumentUnsignedInvalidValue1)
 
 TEST(TestParseArgument, parseArgumentUnsignedInvalidValue2)
 {
-  using arg_type = ssize_t;
+  using arg_type = size_t;
   arg_type value{};
   Argument arg{"","", "", value};
   std::string str_argument = "2.7";
@@ -317,7 +317,7 @@ TEST(TestParseArgument, parseArgumentUnsignedInvalidValue2)
 
 TEST(TestParseArgument, parseArgumentUnsignedInvalidValue3)
 {
-  using arg_type = ssize_t;
+  using arg_type = size_t;
   arg_type value{};
   Argument arg{"","", "", value};
   std::string str_argument = "-435";
