@@ -15,7 +15,7 @@ FetchContent_MakeAvailable(googletest)
 add_library(rand_lib
         src/argument.cpp
         src/argument_parser.cpp
-        )
+        src/utility.cpp)
 target_include_directories(rand_lib PUBLIC "inc")
 
 add_executable(rand src/main.cpp)
@@ -25,6 +25,6 @@ target_link_libraries(rand PRIVATE rand_lib)
 add_executable(RandUnitTest
         test/argument_parser_test.cpp
         test/argument_test.cpp
-        )
+        test/utility_test.cpp)
 
 target_link_libraries(RandUnitTest PRIVATE rand_lib gmock gmock_main)

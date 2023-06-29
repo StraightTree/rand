@@ -3,17 +3,7 @@
 #include <algorithm>
 #include <sstream>
 
-std::string ArgumentParser::trim(const std::string& str, const std::string& whitespace /*= " \t"*/)
-{
-  const auto strBegin = str.find_first_not_of(whitespace);
-  if (strBegin == std::string::npos)
-    return ""; // no content
-
-  const auto strEnd = str.find_last_not_of(whitespace);
-  const auto strRange = strEnd - strBegin + 1;
-
-  return str.substr(strBegin, strRange);
-}
+#include "utility.hpp"
 
 void ArgumentParser::getSplitUpArguments(std::vector<std::pair<std::string, std::string>>& arg_list)
 {
@@ -21,7 +11,7 @@ void ArgumentParser::getSplitUpArguments(std::vector<std::pair<std::string, std:
   constexpr std::array<char,1>DELIMITER{'-'};
   while ((pos = terminal_args_.find(DELIMITER.front())) != std::string::npos)
   {
-    const auto tmp = trim(terminal_args_.substr(0, pos));
+    const auto tmp = Util::trim(terminal_args_.substr(0, pos));
     if (!tmp.empty())
     {
       auto p = tmp.find_first_of(' ');
@@ -31,7 +21,7 @@ void ArgumentParser::getSplitUpArguments(std::vector<std::pair<std::string, std:
     terminal_args_.erase(0, pos + DELIMITER.size());
   }
 
-  const auto tmp = trim(terminal_args_);
+  const auto tmp = Util::trim(terminal_args_);
   if (!tmp.empty())
   {
     auto p = tmp.find_first_of(' ');
