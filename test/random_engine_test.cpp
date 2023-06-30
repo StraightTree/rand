@@ -29,6 +29,16 @@ TEST(TestUniformRandomEngine, getNumberReturnsDifferentValuesChar)
   }
 }
 
+TEST(TestUniformRandomEngine, getNumberReturnsOnlyPositiveValues)
+{
+  UniformRandomEngine<short> uniform_random_engine{};
+  constexpr int kIterations{1000};
+  for (int i{}; i < kIterations; i++)
+  {
+    ASSERT_GE(uniform_random_engine.getNumber(), 0);
+  }
+}
+
 TEST(TestUniformRandomEngine, getNumberReturnsCompleteRange)
 {
   using ValType = unsigned char;
