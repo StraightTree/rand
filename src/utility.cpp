@@ -40,7 +40,7 @@ namespace util
     }
   }
 
-  std::string createStringFromCharPtrArray(int size, char* char_ptr_array[])
+  std::string createStringFromCharPtrArray(int size, const char* char_ptr_array[])
   {
     std::stringstream ss{};
     for (int i{}; i < size; i++)
