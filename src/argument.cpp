@@ -30,6 +30,12 @@ Argument::Argument(std::string  brief, std::string  verbose, std::string  descri
 {
 }
 
+Argument::Argument(std::string  brief, std::string  verbose, std::string  description, std::vector<std::string>& arg) :
+          Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::STRING_LIST, reinterpret_cast<void*>(&arg))
+{
+
+}
+
 const std::string& Argument::getBrief() const
 {
   return brief_;
