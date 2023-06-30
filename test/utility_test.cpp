@@ -220,5 +220,5 @@ TEST(TestUtil, createStringFromCharPtrArray)
 TEST(TestUtil, createStringFromCharPtrArrayEmptyStrings)
 {
   const char* string_array[]{"", "", "", "", "", ""};
-  ASSERT_NO_THROW(ASSERT_EQ(util::createStringFromCharPtrArray(6, string_array), ""));
+  ASSERT_NO_THROW(ASSERT_EQ(util::createStringFromCharPtrArray(6, string_array), "      "));
 }
