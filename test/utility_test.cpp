@@ -11,42 +11,42 @@ class TestUtil : public ::testing::Test
 TEST(TestUtil, TestTrimBothSides)
 {
     const std::string string_with_whitespaces{"    text   "};
-    const std::string result_string = Util::trim(string_with_whitespaces);
+    const std::string result_string = util::trim(string_with_whitespaces);
     ASSERT_EQ(result_string, "text");
 }
 
 TEST(TestUtil, TestTrimLeft)
 {
     const std::string string_with_whitespaces{"    abcd"};
-    const std::string result_string = Util::trim(string_with_whitespaces);
+    const std::string result_string = util::trim(string_with_whitespaces);
     ASSERT_EQ(result_string, "abcd");
 }
 
 TEST(TestUtil, TestTrimRight)
 {
     const std::string string_with_whitespaces{"abcd  "};
-    const std::string result_string = Util::trim(string_with_whitespaces);
+    const std::string result_string = util::trim(string_with_whitespaces);
     ASSERT_EQ(result_string, "abcd");
 }
 
 TEST(TestUtil, TestTrimOnlyBlanks)
 {
     const std::string string_with_whitespaces{"         "};
-    const std::string result_string = Util::trim(string_with_whitespaces);
+    const std::string result_string = util::trim(string_with_whitespaces);
     ASSERT_EQ(result_string, "");
 }
 
 TEST(TestUtil, TestTrimNoBlanks)
 {
     const std::string some_text_without_blank{"some_text_without_blank"};
-    const std::string result_string = Util::trim(some_text_without_blank);
+    const std::string result_string = util::trim(some_text_without_blank);
     ASSERT_EQ(result_string, some_text_without_blank);
 }
 
 TEST(TestUtil, TestTrimInternalBlanks)
 {
     const std::string some_text_with_internal_blank{"some text with blank"};
-    const std::string result_string = Util::trim(some_text_with_internal_blank);
+    const std::string result_string = util::trim(some_text_with_internal_blank);
     ASSERT_EQ(result_string, some_text_with_internal_blank);
 }
 
@@ -55,7 +55,7 @@ TEST(TestUtil, strToNumericTypeSignedValidMax)
     using arg_type = ssize_t;
     arg_type value{std::numeric_limits<arg_type>::max()};
     const std::string str_value {std::to_string(value)};
-    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+    ASSERT_NO_THROW(ASSERT_EQ(util::strToNumericType<arg_type>(str_value), value));
 }
 
 TEST(TestUtil, strToNumericTypeSignedValidMin)
@@ -63,21 +63,21 @@ TEST(TestUtil, strToNumericTypeSignedValidMin)
     using arg_type = ssize_t;
     arg_type value{std::numeric_limits<arg_type>::min()};
     const std::string str_value {std::to_string(value)};
-    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+    ASSERT_NO_THROW(ASSERT_EQ(util::strToNumericType<arg_type>(str_value), value));
 }
 
 TEST(TestUtil, strToNumericTypeSignedInvalid)
 {
     using arg_type = ssize_t;
     const std::string str_value {"asdf"};
-    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+    ASSERT_THROW(util::strToNumericType<arg_type>(str_value), std::invalid_argument);
 }
 
 TEST(TestUtil, strToNumericTypeSignedEmpty)
 {
     using arg_type = ssize_t;
     const std::string str_value {};
-    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), 0));
+    ASSERT_NO_THROW(ASSERT_EQ(util::strToNumericType<arg_type>(str_value), 0));
 }
 
 TEST(TestUtil, strToNumericTypeUnsignedValidMax)
@@ -85,7 +85,7 @@ TEST(TestUtil, strToNumericTypeUnsignedValidMax)
     using arg_type = size_t;
     arg_type value{std::numeric_limits<arg_type>::max()};
     const std::string str_value {std::to_string(value)};
-    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+    ASSERT_NO_THROW(ASSERT_EQ(util::strToNumericType<arg_type>(str_value), value));
 }
 
 TEST(TestUtil, strToNumericTypeUnsignedValidMin)
@@ -93,28 +93,28 @@ TEST(TestUtil, strToNumericTypeUnsignedValidMin)
     using arg_type = size_t;
     arg_type value{std::numeric_limits<arg_type>::min()};
     const std::string str_value {std::to_string(value)};
-    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), value));
+    ASSERT_NO_THROW(ASSERT_EQ(util::strToNumericType<arg_type>(str_value), value));
 }
 
 TEST(TestUtil, strToNumericTypeUnsignedInvalid1)
 {
     using arg_type = size_t;
     const std::string str_value {"asdf"};
-    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+    ASSERT_THROW(util::strToNumericType<arg_type>(str_value), std::invalid_argument);
 }
 
 TEST(TestUtil, strToNumericTypeUnsignedInvalid2)
 {
     using arg_type = size_t;
     const std::string str_value {"-1"};
-    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+    ASSERT_THROW(util::strToNumericType<arg_type>(str_value), std::invalid_argument);
 }
 
 TEST(TestUtil, strToNumericTypeUnsignedEmpty)
 {
     using arg_type = size_t;
     const std::string str_value {};
-    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), 0));
+    ASSERT_NO_THROW(ASSERT_EQ(util::strToNumericType<arg_type>(str_value), 0));
 }
 
 TEST(TestUtil, strToNumericTypeFloatValidMax)
@@ -122,7 +122,7 @@ TEST(TestUtil, strToNumericTypeFloatValidMax)
     using arg_type = double;
     arg_type value{std::numeric_limits<arg_type>::max()};
     const std::string str_value {std::to_string(value)};
-    ASSERT_NO_THROW(ASSERT_DOUBLE_EQ(Util::strToNumericType<arg_type>(str_value), value));
+    ASSERT_NO_THROW(ASSERT_DOUBLE_EQ(util::strToNumericType<arg_type>(str_value), value));
 }
 
 TEST(TestUtil, strToNumericTypeFloatValidMin)
@@ -130,28 +130,28 @@ TEST(TestUtil, strToNumericTypeFloatValidMin)
     using arg_type = double;
     arg_type value{std::numeric_limits<arg_type>::min()};
     const std::string str_value {std::to_string(value)};
-    ASSERT_NO_THROW(ASSERT_TRUE(std::abs(Util::strToNumericType<arg_type>(str_value) - value) < std::numeric_limits<arg_type>::epsilon()));
+    ASSERT_NO_THROW(ASSERT_TRUE(std::abs(util::strToNumericType<arg_type>(str_value) - value) < std::numeric_limits<arg_type>::epsilon()));
 }
 
 TEST(TestUtil, strToNumericTypeFloatInvalid1)
 {
     using arg_type = double;
     const std::string str_value {"asdf"};
-    ASSERT_THROW(Util::strToNumericType<arg_type>(str_value), std::invalid_argument);
+    ASSERT_THROW(util::strToNumericType<arg_type>(str_value), std::invalid_argument);
 }
 
 TEST(TestUtil, strToNumericTypeFloatEmpty)
 {
     using arg_type = double;
     const std::string str_value {};
-    ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), 0));
+    ASSERT_NO_THROW(ASSERT_EQ(util::strToNumericType<arg_type>(str_value), 0));
 }
 
 TEST(TestUtil, splitStringByDelimiterEmpty)
 {
   std::string list{};
   std::vector<std::string> token{};
-  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ' ', token));
+  ASSERT_NO_THROW(util::splitStringByDelimiter(list, ' ', token));
 
   ASSERT_TRUE(token.empty());
 }
@@ -160,7 +160,7 @@ TEST(TestUtil, splitStringByDelimiterValid)
 {
   std::string list{"This is some string"};
   std::vector<std::string> token{};
-  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ' ', token));
+  ASSERT_NO_THROW(util::splitStringByDelimiter(list, ' ', token));
 
   ASSERT_EQ(token.size(), 4);
   ASSERT_EQ(token.at(0), "This");
@@ -173,7 +173,7 @@ TEST(TestUtil, splitStringByDelimiterValidMultipleBlanks)
 {
   std::string list{"   This is               some string   "};
   std::vector<std::string> token{};
-  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ' ', token));
+  ASSERT_NO_THROW(util::splitStringByDelimiter(list, ' ', token));
 
   ASSERT_EQ(token.size(), 4);
   ASSERT_EQ(token.at(0), "This");
@@ -186,7 +186,7 @@ TEST(TestUtil, splitStringByDelimiterValidSemicolon)
 {
   std::string list{"   This; is  ;             some ; string ;  "};
   std::vector<std::string> token{};
-  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ';', token));
+  ASSERT_NO_THROW(util::splitStringByDelimiter(list, ';', token));
 
   ASSERT_EQ(token.size(), 4);
   ASSERT_EQ(token.at(0), "This");
@@ -199,7 +199,7 @@ TEST(TestUtil, splitStringByDelimiterDelimiterOnly)
 {
   std::string list{";;;;;; ;;;;"};
   std::vector<std::string> token{};
-  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ';', token));
+  ASSERT_NO_THROW(util::splitStringByDelimiter(list, ';', token));
 
   ASSERT_TRUE(token.empty());
 }

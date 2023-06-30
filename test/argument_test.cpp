@@ -2,7 +2,8 @@
 #include "../inc/argument_parser.hpp"
 
 class TestArgument : public ::testing::Test
-{};
+{
+};
 
 
 TEST(TestArgument, ArgumentBoolConstructor)

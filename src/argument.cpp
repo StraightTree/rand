@@ -5,33 +5,40 @@
 #include "argument.hpp"
 
 #include <utility>
-Argument::Argument(std::string  brief, std::string  verbose, std::string  description, DataType::BoolType& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kBool, reinterpret_cast<void*>(&arg))
+
+Argument::Argument(std::string brief, std::string verbose, std::string description, DataType::BoolType& arg) :
+  Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kBool,
+           reinterpret_cast<void*>(&arg))
 {
 }
 
-Argument::Argument(std::string  brief, std::string  verbose, std::string  description, DataType::UnsignedIntType& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kUnsignedInteger, reinterpret_cast<void*>(&arg))
+Argument::Argument(std::string brief, std::string verbose, std::string description, DataType::UnsignedIntType& arg) :
+  Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kUnsignedInteger,
+           reinterpret_cast<void*>(&arg))
 {
 }
 
-Argument::Argument(std::string  brief, std::string  verbose, std::string  description, DataType::SignedIntType& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kSignedInteger, reinterpret_cast<void*>(&arg))
+Argument::Argument(std::string brief, std::string verbose, std::string description, DataType::SignedIntType& arg) :
+  Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kSignedInteger,
+           reinterpret_cast<void*>(&arg))
 {
 }
 
-Argument::Argument(std::string  brief, std::string  verbose, std::string  description, DataType::FloatType& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kFloat, reinterpret_cast<void*>(&arg))
+Argument::Argument(std::string brief, std::string verbose, std::string description, DataType::FloatType& arg) :
+  Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kFloat,
+           reinterpret_cast<void*>(&arg))
 {
 }
 
-Argument::Argument(std::string  brief, std::string  verbose, std::string  description, DataType::StringType& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kString, reinterpret_cast<void*>(&arg))
+Argument::Argument(std::string brief, std::string verbose, std::string description, DataType::StringType& arg) :
+  Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kString,
+           reinterpret_cast<void*>(&arg))
 {
 }
 
-Argument::Argument(std::string  brief, std::string  verbose, std::string  description, DataType::StringListType& arg) :
-          Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kStringList, reinterpret_cast<void*>(&arg))
+Argument::Argument(std::string brief, std::string verbose, std::string description, DataType::StringListType& arg) :
+  Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kStringList,
+           reinterpret_cast<void*>(&arg))
 {
 
 }

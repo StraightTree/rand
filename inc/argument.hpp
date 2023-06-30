@@ -29,7 +29,7 @@ public:
 
   bool operator==(const Argument& rhs) const
   {
-    return    (arg_ == rhs.arg_)
+    return (arg_ == rhs.arg_)
            && (arg_type_ == rhs.arg_type_)
            && (brief_ == rhs.brief_)
            && (verbose_ == rhs.verbose_)
@@ -43,8 +43,10 @@ public:
 
 
 private:
-  Argument(std::string brief, std::string  verbose, std::string  description, ArgumentType type, void* arg) :
-          brief_(std::move(brief)), verbose_(std::move(verbose)), description_(std::move(description)), arg_type_(type), arg_(arg) {};
+  Argument(std::string brief, std::string verbose, std::string description, ArgumentType type, void* arg) :
+    brief_(std::move(brief)), verbose_(std::move(verbose)), description_(std::move(description)), arg_type_(type),
+    arg_(arg)
+  {};
 
 
   std::string brief_{};
@@ -55,20 +57,32 @@ private:
   bool provided_by_user_{};
 
 public:
-  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::BoolType& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::UnsignedIntType& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::SignedIntType& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::FloatType& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::StringType& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::StringListType& arg);
+  Argument(std::string brief, std::string verbose, std::string description, DataType::BoolType& arg);
+
+  Argument(std::string brief, std::string verbose, std::string description, DataType::UnsignedIntType& arg);
+
+  Argument(std::string brief, std::string verbose, std::string description, DataType::SignedIntType& arg);
+
+  Argument(std::string brief, std::string verbose, std::string description, DataType::FloatType& arg);
+
+  Argument(std::string brief, std::string verbose, std::string description, DataType::StringType& arg);
+
+  Argument(std::string brief, std::string verbose, std::string description, DataType::StringListType& arg);
 
   [[nodiscard]] const std::string& getBrief() const;
+
   [[nodiscard]] const std::string& getVerbose() const;
+
   [[nodiscard]] const std::string& getDescription() const;
+
   [[nodiscard]] ArgumentType getArgumentType() const;
+
   [[nodiscard]] const void* getArgument() const;
+
   [[nodiscard]] void* getArgument();
+
   [[nodiscard]] bool providedByUser() const;
+
   void setProvidedByUser();
 };
 
