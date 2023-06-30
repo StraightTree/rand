@@ -203,3 +203,22 @@ TEST(TestUtil, splitStringByDelimiterDelimiterOnly)
 
   ASSERT_TRUE(token.empty());
 }
+
+
+TEST(TestUtil, createStringFromCharPtrArrayEmpty)
+{
+  const char* string_array[1]{};
+  ASSERT_NO_THROW(ASSERT_EQ(util::createStringFromCharPtrArray(0, string_array), ""));
+}
+
+TEST(TestUtil, createStringFromCharPtrArray)
+{
+  const char* string_array[]{"Some", "String", "Which", "Should", "Be", "Connected"};
+  ASSERT_NO_THROW(ASSERT_EQ(util::createStringFromCharPtrArray(6, string_array), "Some String Which Should Be Connected "));
+}
+
+TEST(TestUtil, createStringFromCharPtrArrayEmptyStrings)
+{
+  const char* string_array[]{"", "", "", "", "", ""};
+  ASSERT_NO_THROW(ASSERT_EQ(util::createStringFromCharPtrArray(6, string_array), ""));
+}
