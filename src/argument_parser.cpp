@@ -49,39 +49,39 @@ void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
 {
   switch (arg.getArgumentType())
   {
-    case Argument::ArgumentType::STRING_LIST:
+    case Argument::ArgumentType::kStringList:
     {
         parseStringList(arg, value);
         break;
     }
-    case Argument::ArgumentType::STRING:
+    case Argument::ArgumentType::kString:
     {
       auto* string_ptr = reinterpret_cast<std::string*>(arg.getArgument());
       *string_ptr = value;
       break;
     }
-    case Argument::ArgumentType::FLOAT:
+    case Argument::ArgumentType::kFloat:
     {
       const auto val = Util::strToNumericType<double>(value);
       auto* double_ptr = reinterpret_cast<double*>(arg.getArgument());
       *double_ptr = val;
       break;
     }
-    case Argument::ArgumentType::SIGNED_INTEGER:
+    case Argument::ArgumentType::kSignedInteger:
     {
       const auto val = Util::strToNumericType<ssize_t>(value);
       auto* signed_int_ptr = reinterpret_cast<ssize_t *>(arg.getArgument());
       *signed_int_ptr = val;
       break;
     }
-    case Argument::ArgumentType::UNSIGNED_INTEGER:
+    case Argument::ArgumentType::kUnsignedInteger:
     {
       const auto val = Util::strToNumericType<size_t>(value);
       auto* unsigned_int_ptr = reinterpret_cast<size_t *>(arg.getArgument());
       *unsigned_int_ptr = val;
       break;
     }
-    case Argument::ArgumentType::BOOL:
+    case Argument::ArgumentType::kBool:
     {
       std::string tmp{value};
       std::transform(tmp.begin(), tmp.end(), tmp.begin(),

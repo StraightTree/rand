@@ -19,7 +19,7 @@ TEST(TestArgument, ArgumentBoolConstructor)
   ASSERT_EQ(argument.getBrief(), BRIEF);
   ASSERT_EQ(argument.getVerbose(), VERBOSE);
   ASSERT_EQ(argument.getDescription(), DESCRIPTION);
-  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::BOOL);
+  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::kBool);
   ASSERT_EQ(argument.getArgument(), reinterpret_cast<void*>(&arg));
   ASSERT_EQ(*reinterpret_cast<bool*>(argument.getArgument()), arg);
 
@@ -42,7 +42,7 @@ TEST(TestArgument, ArgumentUnsignedConstructor)
   ASSERT_EQ(argument.getBrief(), BRIEF);
   ASSERT_EQ(argument.getVerbose(), VERBOSE);
   ASSERT_EQ(argument.getDescription(), DESCRIPTION);
-  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::UNSIGNED_INTEGER);
+  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::kUnsignedInteger);
   ASSERT_EQ(argument.getArgument(), reinterpret_cast<void*>(&arg));
   ASSERT_EQ(*reinterpret_cast<size_t*>(argument.getArgument()), arg);
 
@@ -65,7 +65,7 @@ TEST(TestArgument, ArgumentSignedConstructor)
   ASSERT_EQ(argument.getBrief(), BRIEF);
   ASSERT_EQ(argument.getVerbose(), VERBOSE);
   ASSERT_EQ(argument.getDescription(), DESCRIPTION);
-  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::SIGNED_INTEGER);
+  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::kSignedInteger);
   ASSERT_EQ(argument.getArgument(), reinterpret_cast<void*>(&arg));
   ASSERT_EQ(*reinterpret_cast<ssize_t*>(argument.getArgument()), arg);
 
@@ -88,7 +88,7 @@ TEST(TestArgument, ArgumentFloatConstructor)
   ASSERT_EQ(argument.getBrief(), BRIEF);
   ASSERT_EQ(argument.getVerbose(), VERBOSE);
   ASSERT_EQ(argument.getDescription(), DESCRIPTION);
-  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::FLOAT);
+  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::kFloat);
   ASSERT_EQ(argument.getArgument(), reinterpret_cast<void*>(&arg));
   ASSERT_DOUBLE_EQ(*reinterpret_cast<double*>(argument.getArgument()), arg);
 
@@ -111,7 +111,7 @@ TEST(TestArgument, ArgumentStringConstructor)
   ASSERT_EQ(argument.getBrief(), BRIEF);
   ASSERT_EQ(argument.getVerbose(), VERBOSE);
   ASSERT_EQ(argument.getDescription(), DESCRIPTION);
-  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::STRING);
+  ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::kString);
   ASSERT_EQ(argument.getArgument(), reinterpret_cast<void*>(&arg));
   ASSERT_EQ(*reinterpret_cast<std::string*>(argument.getArgument()), arg);
 
@@ -144,7 +144,7 @@ TEST(TestArgument, ArgumentStringListConstructor)
     ASSERT_EQ(argument.getBrief(), BRIEF);
     ASSERT_EQ(argument.getVerbose(), VERBOSE);
     ASSERT_EQ(argument.getDescription(), DESCRIPTION);
-    ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::STRING_LIST);
+    ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::kStringList);
     ASSERT_EQ(argument.getArgument(), reinterpret_cast<void*>(&arg));
     ASSERT_EQ(*reinterpret_cast<std::vector<std::string>*>(argument.getArgument()), arg);
 

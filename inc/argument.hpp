@@ -9,12 +9,12 @@ class Argument
 public:
   enum class ArgumentType
   {
-    BOOL,
-    SIGNED_INTEGER,
-    UNSIGNED_INTEGER,
-    FLOAT,
-    STRING,
-    STRING_LIST
+    kBool,
+    kSignedInteger,
+    kUnsignedInteger,
+    kFloat,
+    kString,
+    kStringList
   };
 
   bool operator==(const Argument& rhs) const

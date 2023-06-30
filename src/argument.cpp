@@ -6,32 +6,32 @@
 
 #include <utility>
 Argument::Argument(std::string  brief, std::string  verbose, std::string  description, bool& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::BOOL, reinterpret_cast<void*>(&arg))
+        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kBool, reinterpret_cast<void*>(&arg))
 {
 }
 
 Argument::Argument(std::string  brief, std::string  verbose, std::string  description, size_t& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::UNSIGNED_INTEGER, reinterpret_cast<void*>(&arg))
+        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kUnsignedInteger, reinterpret_cast<void*>(&arg))
 {
 }
 
 Argument::Argument(std::string  brief, std::string  verbose, std::string  description, ssize_t& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::SIGNED_INTEGER, reinterpret_cast<void*>(&arg))
+        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kSignedInteger, reinterpret_cast<void*>(&arg))
 {
 }
 
 Argument::Argument(std::string  brief, std::string  verbose, std::string  description, double& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::FLOAT, reinterpret_cast<void*>(&arg))
+        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kFloat, reinterpret_cast<void*>(&arg))
 {
 }
 
 Argument::Argument(std::string  brief, std::string  verbose, std::string  description, std::string& arg) :
-        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::STRING, reinterpret_cast<void*>(&arg))
+        Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kString, reinterpret_cast<void*>(&arg))
 {
 }
 
 Argument::Argument(std::string  brief, std::string  verbose, std::string  description, std::vector<std::string>& arg) :
-          Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::STRING_LIST, reinterpret_cast<void*>(&arg))
+          Argument(std::move(brief), std::move(verbose), std::move(description), ArgumentType::kStringList, reinterpret_cast<void*>(&arg))
 {
 
 }
