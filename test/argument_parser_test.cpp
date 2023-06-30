@@ -123,110 +123,101 @@ static std::string toString(const std::vector<std::string>& container, const cha
 
 TEST(TestParseArgument, parseArgumentStringListEmpty)
 {
-  using arg_type = std::vector<std::string>;
-  arg_type value{};
+
+  Argument::DataType::StringListType value{};
   Argument arg{"","", "", value};
   const std::string argument = toString(value, ' ');
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
 
-  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(value, *reinterpret_cast<Argument::DataType::StringListType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentStringList)
 {
-  using arg_type = std::vector<std::string>;
-  arg_type value{"This", "is", "some", "list", "which", "should", "be", "parsed"};
+  Argument::DataType::StringListType value{"This", "is", "some", "list", "which", "should", "be", "parsed"};
   Argument arg{"","", "", value};
   const std::string argument = toString(value, ',');
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
 
-  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(value, *reinterpret_cast<Argument::DataType::StringListType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentStringListNumericContent)
 {
-  using arg_type = std::vector<std::string>;
-  arg_type value{"32", "is", "43", "list", "54", "23", "be", "4"};
+  Argument::DataType::StringListType value{"32", "is", "43", "list", "54", "23", "be", "4"};
   Argument arg{"","", "", value};
   const std::string argument = toString(value, ',');
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
 
-  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(value, *reinterpret_cast<Argument::DataType::StringListType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentString)
 {
-  using arg_type = std::string;
-  arg_type value{};
+  Argument::DataType::StringType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{"SomeArgumentInMixedCase"};
+  const Argument::DataType::StringType argument{"SomeArgumentInMixedCase"};
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
 
-  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(value, *reinterpret_cast<Argument::DataType::StringType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentEmptyString)
 {
-  using arg_type = std::string;
-  arg_type value{};
+  Argument::DataType::StringType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{};
+  const Argument::DataType::StringType argument{};
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
 
-  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(value, *reinterpret_cast<Argument::DataType::StringType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentAlphaNumericString)
 {
-  using arg_type = std::string;
-  arg_type value{};
+  Argument::DataType::StringType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{"ABCDefgh1234"};
+  const Argument::DataType::StringType argument{"ABCDefgh1234"};
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
 
-  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(value, *reinterpret_cast<Argument::DataType::StringType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentFloat)
 {
-  using arg_type = double;
-  arg_type value{};
+  Argument::DataType::FloatType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{3.14159};
+  const Argument::DataType::FloatType argument{3.14159};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::FloatType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentFloatMaxValue)
 {
-  using arg_type = double;
-  arg_type value{};
+  Argument::DataType::FloatType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{std::numeric_limits<arg_type>::max()};
+  const Argument::DataType::FloatType argument{std::numeric_limits<Argument::DataType::FloatType>::max()};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_DOUBLE_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_DOUBLE_EQ(argument, *reinterpret_cast<Argument::DataType::FloatType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentFloatMinValue)
 {
-  using arg_type = double;
-  arg_type value{};
+  Argument::DataType::FloatType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{std::numeric_limits<arg_type>::min()};
+  const Argument::DataType::FloatType argument{std::numeric_limits<Argument::DataType::FloatType>::min()};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_TRUE(std::abs(argument-*reinterpret_cast<arg_type*>(arg.getArgument())) < std::numeric_limits<arg_type>::epsilon());
+  ASSERT_TRUE(std::abs(argument-*reinterpret_cast<Argument::DataType::FloatType*>(arg.getArgument())) < std::numeric_limits<Argument::DataType::FloatType>::epsilon());
 }
 
 TEST(TestParseArgument, parseArgumentFloatInvalidValue)
 {
-  using arg_type = double;
-  arg_type value{};
+  Argument::DataType::FloatType value{};
   Argument arg{"","", "", value};
   std::string str_argument = "abcd";
   ASSERT_THROW(ArgumentParser::parseArgument(arg, str_argument), std::invalid_argument);
@@ -236,56 +227,51 @@ TEST(TestParseArgument, parseArgumentFloatInvalidValue)
 
 TEST(TestParseArgument, parseArgumentSignedIntNegative)
 {
-  using arg_type = ssize_t;
-  arg_type value{};
+  Argument::DataType::SignedIntType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{-34324};
+  const Argument::DataType::SignedIntType argument{-34324};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::SignedIntType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentSignedIntPositve)
 {
-  using arg_type = ssize_t;
-  arg_type value{};
+  Argument::DataType::SignedIntType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{28938998};
+  const Argument::DataType::SignedIntType argument{28938998};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::SignedIntType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentSignedIntMaxValue)
 {
-  using arg_type = ssize_t;
-  arg_type value{};
+  Argument::DataType::SignedIntType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{std::numeric_limits<arg_type>::max()};
+  const Argument::DataType::SignedIntType argument{std::numeric_limits<Argument::DataType::SignedIntType>::max()};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::SignedIntType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentSignedIntMinValue)
 {
-  using arg_type = ssize_t;
-  arg_type value{};
+  Argument::DataType::SignedIntType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{std::numeric_limits<arg_type>::min()};
+  const Argument::DataType::SignedIntType argument{std::numeric_limits<Argument::DataType::SignedIntType>::min()};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::SignedIntType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentSignedInvalidValue1)
 {
-  using arg_type = ssize_t;
-  arg_type value{};
+  Argument::DataType::SignedIntType value{};
   Argument arg{"","", "", value};
   std::string str_argument = "abcd";
   ASSERT_THROW(ArgumentParser::parseArgument(arg, str_argument), std::invalid_argument);
@@ -295,8 +281,7 @@ TEST(TestParseArgument, parseArgumentSignedInvalidValue1)
 
 TEST(TestParseArgument, parseArgumentSignedInvalidValue2)
 {
-  using arg_type = ssize_t;
-  arg_type value{};
+  Argument::DataType::SignedIntType value{};
   Argument arg{"","", "", value};
   std::string str_argument = "2.7";
   ASSERT_THROW(ArgumentParser::parseArgument(arg, str_argument), std::invalid_argument);
@@ -306,44 +291,40 @@ TEST(TestParseArgument, parseArgumentSignedInvalidValue2)
 
 TEST(TestParseArgument, parseArgumentUnsignedInt)
 {
-  using arg_type = size_t;
-  arg_type value{};
+  Argument::DataType::UnsignedIntType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{34324};
+  const Argument::DataType::UnsignedIntType argument{34324};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::UnsignedIntType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentUnsignedIntMaxValue)
 {
-  using arg_type = size_t;
-  arg_type value{};
+  Argument::DataType::UnsignedIntType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{std::numeric_limits<arg_type>::max()};
+  const Argument::DataType::UnsignedIntType argument{std::numeric_limits<Argument::DataType::UnsignedIntType>::max()};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::UnsignedIntType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentUnsignedIntMinValue)
 {
-  using arg_type = size_t;
-  arg_type value{};
+  Argument::DataType::UnsignedIntType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{std::numeric_limits<arg_type>::min()};
+  const Argument::DataType::UnsignedIntType argument{std::numeric_limits<Argument::DataType::UnsignedIntType>::min()};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::UnsignedIntType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentUnsignedInvalidValue1)
 {
-  using arg_type = size_t;
-  arg_type value{};
+  Argument::DataType::UnsignedIntType value{};
   Argument arg{"","", "", value};
   std::string str_argument = "abcd";
   ASSERT_THROW(ArgumentParser::parseArgument(arg, str_argument), std::invalid_argument);
@@ -353,8 +334,7 @@ TEST(TestParseArgument, parseArgumentUnsignedInvalidValue1)
 
 TEST(TestParseArgument, parseArgumentUnsignedInvalidValue2)
 {
-  using arg_type = size_t;
-  arg_type value{};
+  Argument::DataType::UnsignedIntType value{};
   Argument arg{"","", "", value};
   std::string str_argument = "2.7";
   ASSERT_THROW(ArgumentParser::parseArgument(arg, str_argument), std::invalid_argument);
@@ -364,8 +344,7 @@ TEST(TestParseArgument, parseArgumentUnsignedInvalidValue2)
 
 TEST(TestParseArgument, parseArgumentUnsignedInvalidValue3)
 {
-  using arg_type = size_t;
-  arg_type value{};
+  Argument::DataType::UnsignedIntType value{};
   Argument arg{"","", "", value};
   std::string str_argument = "-435";
   ASSERT_THROW(ArgumentParser::parseArgument(arg, str_argument), std::invalid_argument);
@@ -375,37 +354,35 @@ TEST(TestParseArgument, parseArgumentUnsignedInvalidValue3)
 
 TEST(TestParseArgument, parseArgumentBoolNoArg)
 {
-  using arg_type = bool;
-  arg_type value{};
+  Argument::DataType::BoolType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{};
+  const Argument::DataType::BoolType argument{};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::BoolType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentBoolArg)
 {
-  using arg_type = bool;
-  arg_type value{};
+  Argument::DataType::BoolType value{};
   Argument arg{"","", "", value};
-  const arg_type argument{true};
+  const Argument::DataType::BoolType argument{true};
   std::string str_argument = std::to_string(argument);
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, str_argument));
 
-  ASSERT_EQ(argument, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(argument, *reinterpret_cast<Argument::DataType::BoolType*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, getUserArgumentsSimple)
 {
-  ssize_t numbers{};
+  Argument::DataType::UnsignedIntType numbers{};
   Argument arg1{"n", "numbers", "", numbers};
 
-  size_t count{};
+  Argument::DataType::UnsignedIntType count{};
   Argument arg2{"c", "count", "", count};
 
-  std::string file{};
+  Argument::DataType::StringType file{};
   Argument arg3{"f", "file", "", file};
 
   std::vector<Argument> supported_arguments{arg1, arg2, arg3};
@@ -421,13 +398,13 @@ TEST(TestParseArgument, getUserArgumentsSimple)
 
 TEST(TestParseArgument, getUserArguments)
 {
-  ssize_t numbers{};
+  Argument::DataType::SignedIntType numbers{};
   Argument arg1{"n", "numbers", "", numbers};
 
-  size_t count{};
+  Argument::DataType::UnsignedIntType count{};
   Argument arg2{"c", "count", "", count};
 
-  std::string file{};
+  Argument::DataType::StringType file{};
   Argument arg3{"f", "file", "", file};
 
   std::vector<Argument> supported_arguments{arg1, arg2, arg3};
@@ -444,13 +421,13 @@ TEST(TestParseArgument, getUserArguments)
 
 TEST(TestParseArgument, getUserArgumentsVerbose)
 {
-  ssize_t numbers{};
+  Argument::DataType::SignedIntType numbers{};
   Argument arg1{"n", "numbers", "", numbers};
 
-  size_t count{};
+  Argument::DataType::UnsignedIntType count{};
   Argument arg2{"c", "count", "", count};
 
-  std::string file{};
+  Argument::DataType::StringType file{};
   Argument arg3{"f", "file", "", file};
 
   std::vector<Argument> supported_arguments{arg1, arg2, arg3};
@@ -467,36 +444,36 @@ TEST(TestParseArgument, getUserArgumentsVerbose)
 
 TEST(TestParseArgument, getUserArgumentsVerboseMultipleBlanks)
 {
-    ssize_t numbers{};
-    Argument arg1{"n", "numbers", "", numbers};
+  Argument::DataType::SignedIntType numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
 
-    size_t count{};
-    Argument arg2{"c", "count", "", count};
+  Argument::DataType::UnsignedIntType count{};
+  Argument arg2{"c", "count", "", count};
 
-    std::string file{};
-    Argument arg3{"f", "file", "", file};
+  Argument::DataType::StringType file{};
+  Argument arg3{"f", "file", "", file};
 
-    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
 
-    std::string terminal_args{"-n     43     -file some_file.txt"};
-    ArgumentParser argument_parser(terminal_args, supported_arguments);
+  std::string terminal_args{"-n     43     -file some_file.txt"};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
 
-    std::vector<Argument> provided_arguments{};
-    ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
-    ASSERT_EQ(provided_arguments.size(), 2);
-    ASSERT_EQ(provided_arguments.at(0), arg1);
-    ASSERT_EQ(provided_arguments.at(1), arg3);
+  std::vector<Argument> provided_arguments{};
+  ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+  ASSERT_EQ(provided_arguments.size(), 2);
+  ASSERT_EQ(provided_arguments.at(0), arg1);
+  ASSERT_EQ(provided_arguments.at(1), arg3);
 }
 
 TEST(TestParseArgument, getUserArgumentsInvalidArg1)
 {
-  ssize_t numbers{};
+  Argument::DataType::SignedIntType numbers{};
   Argument arg1{"n", "numbers", "", numbers};
 
-  size_t count{};
+  Argument::DataType::UnsignedIntType count{};
   Argument arg2{"c", "count", "", count};
 
-  std::string file{};
+  Argument::DataType::StringType file{};
   Argument arg3{"f", "file", "", file};
 
   std::vector<Argument> supported_arguments{arg1, arg2, arg3};
@@ -513,135 +490,135 @@ TEST(TestParseArgument, getUserArgumentsInvalidArg1)
 
 TEST(TestParseArgument, getUserArgumentsInvalidArg2)
 {
-    ssize_t numbers{};
-    Argument arg1{"n", "numbers", "", numbers};
+  Argument::DataType::SignedIntType numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
 
-    size_t count{};
-    Argument arg2{"c", "count", "", count};
+  Argument::DataType::UnsignedIntType count{};
+  Argument arg2{"c", "count", "", count};
 
-    std::string file{};
-    Argument arg3{"f", "file", "", file};
+  Argument::DataType::StringType file{};
+  Argument arg3{"f", "file", "", file};
 
-    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
 
-    std::string terminal_args{"-nothing-to-do-here"};
-    ArgumentParser argument_parser(terminal_args, supported_arguments);
+  std::string terminal_args{"-nothing-to-do-here"};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
 
-    std::vector<Argument> provided_arguments{};
-    ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
-    ASSERT_TRUE(provided_arguments.empty());
+  std::vector<Argument> provided_arguments{};
+  ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+  ASSERT_TRUE(provided_arguments.empty());
 }
 
 TEST(TestParseArgument, getUserArgumentsInvalidArg3)
 {
-    ssize_t numbers{};
-    Argument arg1{"n", "numbers", "", numbers};
+  Argument::DataType::SignedIntType numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
 
-    size_t count{};
-    Argument arg2{"c", "count", "", count};
+  Argument::DataType::UnsignedIntType count{};
+  Argument arg2{"c", "count", "", count};
 
-    std::string file{};
-    Argument arg3{"f", "file", "", file};
+  Argument::DataType::StringType file{};
+  Argument arg3{"f", "file", "", file};
 
-    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
 
-    std::string terminal_args{"-n some_invalid_value"};
-    ArgumentParser argument_parser(terminal_args, supported_arguments);
+  std::string terminal_args{"-n some_invalid_value"};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
 
-    std::vector<Argument> provided_arguments{};
-    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+  std::vector<Argument> provided_arguments{};
+  ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
 }
 
 TEST(TestParseArgument, getUserArgumentsInvalidArg4)
 {
-    ssize_t numbers{};
-    Argument arg1{"n", "numbers", "", numbers};
+  Argument::DataType::SignedIntType numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
 
-    size_t count{};
-    Argument arg2{"c", "count", "", count};
+  Argument::DataType::UnsignedIntType count{};
+  Argument arg2{"c", "count", "", count};
 
-    std::string file{};
-    Argument arg3{"f", "file", "", file};
+  Argument::DataType::StringType file{};
+  Argument arg3{"f", "file", "", file};
 
-    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
 
-    std::string terminal_args{"-n 3.14"};
-    ArgumentParser argument_parser(terminal_args, supported_arguments);
+  std::string terminal_args{"-n 3.14"};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
 
-    std::vector<Argument> provided_arguments{};
-    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+  std::vector<Argument> provided_arguments{};
+  ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
 }
 
 TEST(TestParseArgument, getUserArgumentsInvalidArg5)
 {
-    ssize_t numbers{};
-    Argument arg1{"n", "numbers", "", numbers};
+  Argument::DataType::SignedIntType numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
 
-    size_t count{};
-    Argument arg2{"c", "count", "", count};
+  Argument::DataType::UnsignedIntType count{};
+  Argument arg2{"c", "count", "", count};
 
-    std::string file{};
-    Argument arg3{"f", "file", "", file};
+  Argument::DataType::StringType file{};
+  Argument arg3{"f", "file", "", file};
 
-    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
 
-    std::string terminal_args{"-n 3,14"};
-    ArgumentParser argument_parser(terminal_args, supported_arguments);
+  std::string terminal_args{"-n 3,14"};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
 
-    std::vector<Argument> provided_arguments{};
-    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+  std::vector<Argument> provided_arguments{};
+  ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
 }
 
 TEST(TestParseArgument, getUserArgumentsInvalidArg6)
 {
-    ssize_t numbers{};
-    Argument arg1{"n", "numbers", "", numbers};
+  Argument::DataType::SignedIntType numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
 
-    size_t count{};
-    Argument arg2{"c", "count", "", count};
+  Argument::DataType::UnsignedIntType count{};
+  Argument arg2{"c", "count", "", count};
 
-    std::string file{};
-    Argument arg3{"f", "file", "", file};
+  Argument::DataType::StringType file{};
+  Argument arg3{"f", "file", "", file};
 
-    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
 
-    std::string terminal_args{"-n 3 32 43 23"};
-    ArgumentParser argument_parser(terminal_args, supported_arguments);
+  std::string terminal_args{"-n 3 32 43 23"};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
 
-    std::vector<Argument> provided_arguments{};
-    ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
+  std::vector<Argument> provided_arguments{};
+  ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
 }
 
 TEST(TestParseArgument, getUserArgumentsEmpty)
 {
-    ssize_t numbers{};
-    Argument arg1{"n", "numbers", "", numbers};
+  Argument::DataType::SignedIntType numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
 
-    size_t count{};
-    Argument arg2{"c", "count", "", count};
+  Argument::DataType::UnsignedIntType count{};
+  Argument arg2{"c", "count", "", count};
 
-    std::string file{};
-    Argument arg3{"f", "file", "", file};
+  Argument::DataType::StringType file{};
+  Argument arg3{"f", "file", "", file};
 
-    std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
 
-    std::string terminal_args{};
-    ArgumentParser argument_parser(terminal_args, supported_arguments);
+  std::string terminal_args{};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
 
-    std::vector<Argument> provided_arguments{};
-    ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
-    ASSERT_TRUE(provided_arguments.empty());
+  std::vector<Argument> provided_arguments{};
+  ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+  ASSERT_TRUE(provided_arguments.empty());
 }
 
 TEST(TestParseArgument, getUserArgumentsStringList)
 {
-  ssize_t numbers{};
+  Argument::DataType::SignedIntType numbers{};
   Argument arg1{"n", "numbers", "", numbers};
 
-  std::vector<std::string> list{};
+  Argument::DataType::StringListType list{};
   Argument arg2{"l", "list", "", list};
 
-  std::string file{};
+  Argument::DataType::StringType file{};
   Argument arg3{"f", "file", "", file};
 
   std::vector<Argument> supported_arguments{arg1, arg2, arg3};
@@ -653,10 +630,10 @@ TEST(TestParseArgument, getUserArgumentsStringList)
   ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
   ASSERT_EQ(provided_arguments.size(), 3);
 
-  ASSERT_EQ(*reinterpret_cast<std::string*>(provided_arguments.at(0).getArgument()), "myFavouriteFile.csv");
+  ASSERT_EQ(*reinterpret_cast<Argument::DataType::StringType*>(provided_arguments.at(0).getArgument()), "myFavouriteFile.csv");
 
-  const std::vector<std::string> expected_arg_list{"Alice", "Bob", "Tom", "Dave", "Charly"};
-  ASSERT_EQ(*reinterpret_cast<std::vector<std::string>*>(provided_arguments.at(1).getArgument()), expected_arg_list);
+  const Argument::DataType::StringListType expected_arg_list{"Alice", "Bob", "Tom", "Dave", "Charly"};
+  ASSERT_EQ(*reinterpret_cast<Argument::DataType::StringListType*>(provided_arguments.at(1).getArgument()), expected_arg_list);
 
-  ASSERT_EQ(*reinterpret_cast<ssize_t *>(provided_arguments.at(2).getArgument()), 43);
+  ASSERT_EQ(*reinterpret_cast<Argument::DataType::SignedIntType*>(provided_arguments.at(2).getArgument()), 43);
 }

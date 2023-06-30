@@ -17,6 +17,16 @@ public:
     kStringList
   };
 
+  struct DataType
+  {
+    using BoolType = bool;
+    using SignedIntType = ssize_t;
+    using UnsignedIntType = size_t;
+    using FloatType = double;
+    using StringType = std::string;
+    using StringListType = std::vector<std::string>;
+  };
+
   bool operator==(const Argument& rhs) const
   {
     return    (arg_ == rhs.arg_)
@@ -45,12 +55,12 @@ private:
   bool provided_by_user_{};
 
 public:
-  Argument(std::string  brief, std::string  verbose, std::string  description, bool& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, size_t& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, ssize_t& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, double& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, std::string& arg);
-  Argument(std::string  brief, std::string  verbose, std::string  description, std::vector<std::string>& arg);
+  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::BoolType& arg);
+  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::UnsignedIntType& arg);
+  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::SignedIntType& arg);
+  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::FloatType& arg);
+  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::StringType& arg);
+  Argument(std::string  brief, std::string  verbose, std::string  description, DataType::StringListType& arg);
 
   [[nodiscard]] const std::string& getBrief() const;
   [[nodiscard]] const std::string& getVerbose() const;
