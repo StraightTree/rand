@@ -1,5 +1,7 @@
 #include "utility.hpp"
 
+#include <sstream>
+
 namespace util
 {
   std::string trim(const std::string& str, const std::string& whitespace /*= " \t"*/)
@@ -36,5 +38,15 @@ namespace util
     {
       token.emplace_back(kTmp);
     }
+  }
+
+  std::string createStringFromCharPtrArray(int size, const char* char_ptr_array[])
+  {
+    std::stringstream ss{};
+    for (int i{}; i < size; i++)
+    {
+      ss << char_ptr_array[i] << ' ';
+    }
+    return ss.str();
   }
 }
