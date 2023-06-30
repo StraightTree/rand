@@ -119,6 +119,7 @@ static std::string toString(const std::vector<std::string>& container, const cha
     ss << kValue << ((it_counter == kSize) ? ' ' : delimiter);
     it_counter++;
   }
+  return ss.str();
 }
 
 TEST(TestParseArgument, parseArgumentStringListEmpty)
@@ -126,7 +127,7 @@ TEST(TestParseArgument, parseArgumentStringListEmpty)
 
   Argument::DataType::StringListType value{};
   Argument arg{"","", "", value};
-  const std::string kArgument = toString(value, ' ');
+  const std::string kArgument{};
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, kArgument));
 
   ASSERT_EQ(value, *reinterpret_cast<Argument::DataType::StringListType*>(arg.getArgument()));
