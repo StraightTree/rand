@@ -30,4 +30,6 @@ namespace util
   }
 
   void splitStringByDelimiter(const std::string& string, char delimiter, std::vector<std::string>& token);
+
+  std::string createStringFromCharPtrArray(int size, char* char_ptr_array[]);
 }
