@@ -105,7 +105,54 @@ TEST(TestArgumentParser, getSplitUpArgumentsNonParseableString4)
 }
 
 class TestParseArgument : public TestArgumentParser
-{};
+{
+
+};
+
+static std::string toString(const std::vector<std::string>& container, const char delimiter)
+{
+  std::stringstream ss{};
+  const auto size{container.size()};
+  auto it_counter = 0;
+  for (const auto& value : container)
+  {
+    ss << value << ((it_counter == size) ? ' ' : delimiter);
+    it_counter++;
+  }
+}
+
+TEST(TestParseArgument, parseArgumentStringListEmpty)
+{
+  using arg_type = std::vector<std::string>;
+  arg_type value{};
+  Argument arg{"","", "", value};
+  const std::string argument = toString(value, ' ');
+  ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
+
+  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+}
+
+TEST(TestParseArgument, parseArgumentStringList)
+{
+  using arg_type = std::vector<std::string>;
+  arg_type value{"This", "is", "some", "list", "which", "should", "be", "parsed"};
+  Argument arg{"","", "", value};
+  const std::string argument = toString(value, ',');
+  ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
+
+  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+}
+
+TEST(TestParseArgument, parseArgumentStringListNumericContent)
+{
+  using arg_type = std::vector<std::string>;
+  arg_type value{"32", "is", "43", "list", "54", "23", "be", "4"};
+  Argument arg{"","", "", value};
+  const std::string argument = toString(value, ',');
+  ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
+
+  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+}
 
 TEST(TestParseArgument, parseArgumentString)
 {
@@ -565,8 +612,6 @@ TEST(TestParseArgument, getUserArgumentsInvalidArg6)
     ASSERT_THROW(provided_arguments = argument_parser.getUserArguments(), std::invalid_argument);
 }
 
-
-
 TEST(TestParseArgument, getUserArgumentsEmpty)
 {
     ssize_t numbers{};
@@ -586,4 +631,32 @@ TEST(TestParseArgument, getUserArgumentsEmpty)
     std::vector<Argument> provided_arguments{};
     ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
     ASSERT_TRUE(provided_arguments.empty());
+}
+
+TEST(TestParseArgument, getUserArgumentsStringList)
+{
+  ssize_t numbers{};
+  Argument arg1{"n", "numbers", "", numbers};
+
+  std::vector<std::string> list{};
+  Argument arg2{"l", "list", "", list};
+
+  std::string file{};
+  Argument arg3{"f", "file", "", file};
+
+  std::vector<Argument> supported_arguments{arg1, arg2, arg3};
+
+  std::string terminal_args{"-f myFavouriteFile.csv -list Alice Bob Tom Dave Charly -n 43"};
+  ArgumentParser argument_parser(terminal_args, supported_arguments);
+
+  std::vector<Argument> provided_arguments{};
+  ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+  ASSERT_EQ(provided_arguments.size(), 3);
+
+  ASSERT_EQ(*reinterpret_cast<std::string*>(provided_arguments.at(0).getArgument()), "myFavouriteFile.csv");
+
+  const std::vector<std::string> expected_arg_list{"Alice", "Bob", "Tom", "Dave", "Charly"};
+  ASSERT_EQ(*reinterpret_cast<std::vector<std::string>*>(provided_arguments.at(1).getArgument()), expected_arg_list);
+
+  ASSERT_EQ(*reinterpret_cast<ssize_t *>(provided_arguments.at(2).getArgument()), 43);
 }

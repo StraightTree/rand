@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <charconv>
 #include <stdexcept>
 
@@ -23,4 +24,6 @@ namespace Util
 
       throw std::invalid_argument("This is not a valid value!");
     }
+
+    void splitStringByDelimiter(const std::string& string, char delimiter, std::vector<std::string>& token);
 }

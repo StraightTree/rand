@@ -29,11 +29,31 @@ void ArgumentParser::getSplitUpArguments(std::vector<std::pair<std::string, std:
   }
 }
 
+void ArgumentParser::parseStringList(Argument& arg, const std::string& value)
+{
+  char separator = kDefaultListSeparator;
+  for (const auto& sep : kSupportedListSeparator)
+  {
+    auto pos = value.find(sep);
+    if (pos != std::string::npos)
+    {
+      separator = sep;
+      break;
+    }
+  }
+
+  Util::splitStringByDelimiter(value, separator, *reinterpret_cast<std::vector<std::string>*>(arg.getArgument()));
+}
 
 void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
 {
   switch (arg.getArgumentType())
   {
+    case Argument::ArgumentType::STRING_LIST:
+    {
+        parseStringList(arg, value);
+        break;
+    }
     case Argument::ArgumentType::STRING:
     {
       auto* string_ptr = reinterpret_cast<std::string*>(arg.getArgument());
@@ -66,7 +86,7 @@ void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
       std::string tmp{value};
       std::transform(tmp.begin(), tmp.end(), tmp.begin(),
                      [](unsigned char c){ return std::tolower(c); });
-      const bool val = std::find(SUPPORTED_FALSE_VALUES_BOOL.begin(), SUPPORTED_FALSE_VALUES_BOOL.end(), value) == SUPPORTED_FALSE_VALUES_BOOL.end();
+      const bool val = std::find(kSupportedFalseValuesBool.begin(), kSupportedFalseValuesBool.end(), value) == kSupportedFalseValuesBool.end();
       auto* bool_ptr = reinterpret_cast<bool *>(arg.getArgument());
       *bool_ptr = val;
       break;

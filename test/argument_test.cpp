@@ -128,3 +128,30 @@ TEST(TestArgument, TestDefaultValues)
   ASSERT_NO_THROW(argument.setProvidedByUser());
   ASSERT_TRUE(argument.providedByUser());
 }
+
+TEST(TestArgument, ArgumentStringListConstructor)
+{
+    std::vector<std::string> arg{};
+    ASSERT_NO_THROW(Argument("", "", "", arg));
+
+    const std::string BRIEF{"brief"};
+    const std::string VERBOSE{"verbose"};
+    const std::string DESCRIPTION{"description"};
+    arg.emplace_back("Hello");
+    arg.emplace_back("World");
+    Argument argument = Argument(BRIEF, VERBOSE, DESCRIPTION, arg);
+
+    ASSERT_EQ(argument.getBrief(), BRIEF);
+    ASSERT_EQ(argument.getVerbose(), VERBOSE);
+    ASSERT_EQ(argument.getDescription(), DESCRIPTION);
+    ASSERT_EQ(argument.getArgumentType(), Argument::ArgumentType::STRING_LIST);
+    ASSERT_EQ(argument.getArgument(), reinterpret_cast<void*>(&arg));
+    ASSERT_EQ(*reinterpret_cast<std::vector<std::string>*>(argument.getArgument()), arg);
+
+    ASSERT_EQ(arg.size(), 2);
+    ASSERT_EQ(arg.at(0), "Hello");
+    ASSERT_EQ(arg.at(1), "World");
+
+    arg.erase(arg.end());
+    ASSERT_EQ(*reinterpret_cast<std::vector<std::string>*>(argument.getArgument()), arg);
+}

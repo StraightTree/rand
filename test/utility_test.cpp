@@ -146,3 +146,60 @@ TEST(TestUtil, strToNumericTypeFloatEmpty)
     const std::string str_value {};
     ASSERT_NO_THROW(ASSERT_EQ(Util::strToNumericType<arg_type>(str_value), 0));
 }
+
+TEST(TestUtil, splitStringByDelimiterEmpty)
+{
+  std::string list{};
+  std::vector<std::string> token{};
+  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ' ', token));
+
+  ASSERT_TRUE(token.empty());
+}
+
+TEST(TestUtil, splitStringByDelimiterValid)
+{
+  std::string list{"This is some string"};
+  std::vector<std::string> token{};
+  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ' ', token));
+
+  ASSERT_EQ(token.size(), 4);
+  ASSERT_EQ(token.at(0), "This");
+  ASSERT_EQ(token.at(1), "is");
+  ASSERT_EQ(token.at(2), "some");
+  ASSERT_EQ(token.at(3), "string");
+}
+
+TEST(TestUtil, splitStringByDelimiterValidMultipleBlanks)
+{
+  std::string list{"   This is               some string   "};
+  std::vector<std::string> token{};
+  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ' ', token));
+
+  ASSERT_EQ(token.size(), 4);
+  ASSERT_EQ(token.at(0), "This");
+  ASSERT_EQ(token.at(1), "is");
+  ASSERT_EQ(token.at(2), "some");
+  ASSERT_EQ(token.at(3), "string");
+}
+
+TEST(TestUtil, splitStringByDelimiterValidSemicolon)
+{
+  std::string list{"   This; is  ;             some ; string ;  "};
+  std::vector<std::string> token{};
+  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ';', token));
+
+  ASSERT_EQ(token.size(), 4);
+  ASSERT_EQ(token.at(0), "This");
+  ASSERT_EQ(token.at(1), "is");
+  ASSERT_EQ(token.at(2), "some");
+  ASSERT_EQ(token.at(3), "string");
+}
+
+TEST(TestUtil, splitStringByDelimiterDelimiterOnly)
+{
+  std::string list{";;;;;; ;;;;"};
+  std::vector<std::string> token{};
+  ASSERT_NO_THROW(Util::splitStringByDelimiter(list, ';', token));
+
+  ASSERT_TRUE(token.empty());
+}

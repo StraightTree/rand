@@ -1,8 +1,8 @@
 #pragma once
 
 #include <utility>
-
-#include "string"
+#include <string>
+#include <vector>
 
 class Argument
 {
@@ -13,7 +13,8 @@ public:
     SIGNED_INTEGER,
     UNSIGNED_INTEGER,
     FLOAT,
-    STRING
+    STRING,
+    STRING_LIST
   };
 
   bool operator==(const Argument& rhs) const
@@ -49,6 +50,7 @@ public:
   Argument(std::string  brief, std::string  verbose, std::string  description, ssize_t& arg);
   Argument(std::string  brief, std::string  verbose, std::string  description, double& arg);
   Argument(std::string  brief, std::string  verbose, std::string  description, std::string& arg);
+  Argument(std::string  brief, std::string  verbose, std::string  description, std::vector<std::string>& arg);
 
   [[nodiscard]] const std::string& getBrief() const;
   [[nodiscard]] const std::string& getVerbose() const;
