@@ -119,6 +119,7 @@ static std::string toString(const std::vector<std::string>& container, const cha
     ss << value << ((it_counter == size) ? ' ' : delimiter);
     it_counter++;
   }
+  return ss.str();
 }
 
 TEST(TestParseArgument, parseArgumentStringListEmpty)
