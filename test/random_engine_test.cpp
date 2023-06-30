@@ -15,9 +15,9 @@ TEST(TestUniformRandomEngine, TestConstructor)
 
 TEST(TestUniformRandomEngine, getNumberReturnsDifferentValuesChar)
 {
-  UniformRandomEngine<char> uniform_random_engine{};
+  UniformRandomEngine<unsigned char> uniform_random_engine{};
   constexpr int kIterations{1000};
-  std::unordered_map<char, unsigned char> occurrence_counts{};
+  std::unordered_map<unsigned char, unsigned char> occurrence_counts{};
   for (int i{}; i < kIterations; i++)
   {
     occurrence_counts[uniform_random_engine.getNumber()]++;
@@ -25,7 +25,7 @@ TEST(TestUniformRandomEngine, getNumberReturnsDifferentValuesChar)
 
   for (const auto& kPair : occurrence_counts)
   {
-    EXPECT_LT(kPair.second, 15) << kPair.first << " has " << kPair.second << " occurrences"; //each number should be in the map at most three times
+    EXPECT_LT(kPair.second, 12) << kPair.first << " has " << kPair.second << " occurrences"; //each number should be in the map at most three times
   }
 }
 
