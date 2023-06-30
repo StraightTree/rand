@@ -127,10 +127,10 @@ TEST(TestParseArgument, parseArgumentStringListEmpty)
   using arg_type = std::vector<std::string>;
   arg_type value{};
   Argument arg{"","", "", value};
-  const std::string argument = "";//toString(value, ' ');
+  const std::string argument{};
   ASSERT_NO_THROW(ArgumentParser::parseArgument(arg, argument));
 
-  //ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
+  ASSERT_EQ(value, *reinterpret_cast<arg_type*>(arg.getArgument()));
 }
 
 TEST(TestParseArgument, parseArgumentStringList)
