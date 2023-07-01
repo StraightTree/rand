@@ -14,7 +14,7 @@ int main(int argc, const char *argv[])
   }
   catch (const std::runtime_error& runtime_error)
   {
-    std::cout << "Error occurred during runtime!" << runtime_error.what() << std::endl;
+    std::cout << "Error occurred during runtime! " << runtime_error.what() << std::endl;
   }
   catch (const std::exception& exception)
   {
