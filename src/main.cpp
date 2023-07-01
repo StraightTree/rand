@@ -1,12 +1,14 @@
 #include <iostream>
 #include "utility.hpp"
-#include "argument_parser.hpp"
+#include "rand.hpp"
 
 int main(int argc, const char *argv[])
 {
   try
   {
     const std::string kTerminalArgs = util::createStringFromCharPtrArray(argc-1, argv+1);
+    Rand rand{};
+    rand.runInTerminal(kTerminalArgs);
   }
   catch (const std::invalid_argument& invalid_argument)
   {
