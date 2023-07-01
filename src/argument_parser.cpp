@@ -28,7 +28,7 @@ void ArgumentParser::getSplitUpArguments(std::vector<std::pair<std::string, std:
   }
 }
 
-void ArgumentParser::parseStringList(Argument& arg, const std::string& value)
+void ArgumentParser::parseStringList(std::shared_ptr<Argument>& arg, const std::string& value)
 {
   char separator = kDefaultListSeparator;
   for (const auto& kSep: kSupportedListSeparator)
@@ -41,12 +41,12 @@ void ArgumentParser::parseStringList(Argument& arg, const std::string& value)
     }
   }
 
-  util::splitStringByDelimiter(value, separator, *reinterpret_cast<std::vector<std::string>*>(arg.getArgument()));
+  util::splitStringByDelimiter(value, separator, *reinterpret_cast<std::vector<std::string>*>(arg->getArgument()));
 }
 
-void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
+void ArgumentParser::parseArgument(std::shared_ptr<Argument>& arg, const std::string& value)
 {
-  switch (arg.getArgumentType())
+  switch (arg->getArgumentType())
   {
     case Argument::ArgumentType::kStringList:
     {
@@ -55,28 +55,28 @@ void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
     }
     case Argument::ArgumentType::kString:
     {
-      auto* string_ptr = reinterpret_cast<std::string*>(arg.getArgument());
+      auto* string_ptr = reinterpret_cast<std::string*>(arg->getArgument());
       *string_ptr = value;
       break;
     }
     case Argument::ArgumentType::kFloat:
     {
       const auto kVal = util::strToNumericType<double>(value);
-      auto* double_ptr = reinterpret_cast<double*>(arg.getArgument());
+      auto* double_ptr = reinterpret_cast<double*>(arg->getArgument());
       *double_ptr = kVal;
       break;
     }
     case Argument::ArgumentType::kSignedInteger:
     {
       const auto kVal = util::strToNumericType<ssize_t>(value);
-      auto* signed_int_ptr = reinterpret_cast<ssize_t*>(arg.getArgument());
+      auto* signed_int_ptr = reinterpret_cast<ssize_t*>(arg->getArgument());
       *signed_int_ptr = kVal;
       break;
     }
     case Argument::ArgumentType::kUnsignedInteger:
     {
       const auto kVal = util::strToNumericType<size_t>(value);
-      auto* unsigned_int_ptr = reinterpret_cast<size_t*>(arg.getArgument());
+      auto* unsigned_int_ptr = reinterpret_cast<size_t*>(arg->getArgument());
       *unsigned_int_ptr = kVal;
       break;
     }
@@ -87,7 +87,7 @@ void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
                      [](unsigned char c){ return std::tolower(c); });
       const bool kVal = std::find(kSupportedFalseValuesBool.begin(), kSupportedFalseValuesBool.end(), value) ==
                         kSupportedFalseValuesBool.end();
-      auto* bool_ptr = reinterpret_cast<bool*>(arg.getArgument());
+      auto* bool_ptr = reinterpret_cast<bool*>(arg->getArgument());
       *bool_ptr = kVal;
       break;
     }
@@ -96,27 +96,27 @@ void ArgumentParser::parseArgument(Argument& arg, const std::string& value)
       throw std::runtime_error("Argument type not supported");
     }
   }
-  arg.setProvidedByUser();
 }
 
-std::vector<Argument> ArgumentParser::getUserArguments()
+std::vector<std::shared_ptr<Argument>> ArgumentParser::getUserArguments()
 {
   std::vector<std::pair<std::string, std::string>> arg_list{};
-  std::vector<Argument> provided_arguments{};
+  std::vector<std::shared_ptr<Argument>> provided_arguments{};
   getSplitUpArguments(arg_list);
   for (const auto& kArgPair: arg_list)
   {
     auto it = std::find_if(supported_arguments_.begin(), supported_arguments_.end(),
-                           [&kArgPair](const Argument& supported_arg){
-                               return supported_arg.getBrief() == kArgPair.first ||
-                                      supported_arg.getVerbose() == kArgPair.first;
+                           [&kArgPair](const std::shared_ptr<Argument>& supported_arg){
+                               return supported_arg->getBrief() == kArgPair.first ||
+                                      supported_arg->getVerbose() == kArgPair.first;
                            });
 
-    if (it == supported_arguments_.cend())
+    if (it == supported_arguments_.end())
     {
       continue;
     }
 
+    (*it)->setProvidedByUser();
     parseArgument(*it, util::trim(kArgPair.second));
     provided_arguments.emplace_back(*it);
   }
