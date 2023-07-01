@@ -42,6 +42,11 @@ void ArgumentParser::parseStringList(std::shared_ptr<Argument>& arg, const std::
   }
 
   util::splitStringByDelimiter(value, separator, *reinterpret_cast<std::vector<std::string>*>(arg->getArgument()));
+  if (reinterpret_cast<std::vector<std::string>*>(arg->getArgument())->empty())
+    throw std::runtime_error("vector should contain at least one element"); //flag is also parsed and contained
+
+  //remove first element, because the first element is the flag itself. i.e.: -f abc def ghi -> {f, abc, def, ghi}
+  reinterpret_cast<std::vector<std::string>*>(arg->getArgument())->erase(reinterpret_cast<std::vector<std::string>*>(arg->getArgument())->begin());
 }
 
 void ArgumentParser::parseArgument(std::shared_ptr<Argument>& arg, const std::string& value)
