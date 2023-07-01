@@ -17,7 +17,7 @@ add_library(rand_lib
         src/argument_parser.cpp
         src/utility.cpp
         src/random_engine.cpp
-        src/random_generator.cpp)
+        src/rand.cpp)
 target_include_directories(rand_lib PUBLIC "inc")
 
 add_executable(rand src/main.cpp)
@@ -29,6 +29,7 @@ add_executable(RandUnitTest
         test/argument_test.cpp
         test/utility_test.cpp
         test/random_engine_test.cpp
-        test/random_generator_test.cpp)
+        test/random_generator_test.cpp
+        test/rand_test.cpp)
 
 target_link_libraries(RandUnitTest PRIVATE rand_lib gmock gmock_main)
