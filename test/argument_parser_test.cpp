@@ -706,3 +706,36 @@ TEST(TestParseArgument, getUserArgumentsEmptyStringList)
   ASSERT_TRUE(arg2->providedByUser());
   ASSERT_TRUE(arg3->providedByUser());
 }
+
+TEST(TestParseArgument, getUserArgumentsStringListSingleElement)
+{
+  Argument::DataType::SignedIntType numbers{};
+  auto arg1{std::make_shared<Argument>("n", "numbers", "", numbers)};
+
+  Argument::DataType::StringListType list{};
+  auto arg2{std::make_shared<Argument>("l", "list", "", list)};
+
+  Argument::DataType::StringType file{};
+  auto arg3{std::make_shared<Argument>("f", "file", "", file)};
+
+  std::vector<std::shared_ptr<Argument>> supported_arguments{arg1, arg2, arg3};
+
+  const std::string kTerminalArgs{"-f myFavouriteFile.csv -list item -n 43"};
+  ArgumentParser argument_parser(kTerminalArgs, supported_arguments);
+
+  std::vector<std::shared_ptr<Argument>> provided_arguments{};
+  ASSERT_NO_THROW(provided_arguments = argument_parser.getUserArguments());
+  ASSERT_EQ(provided_arguments.size(), 3);
+
+  ASSERT_EQ(*reinterpret_cast<Argument::DataType::StringType*>(provided_arguments.at(0)->getArgument()), "myFavouriteFile.csv");
+
+  const Argument::DataType::StringListType kExpectedArgList{"item"};
+  ASSERT_EQ(*reinterpret_cast<Argument::DataType::StringListType*>(arg2->getArgument()), kExpectedArgList);
+  ASSERT_EQ(reinterpret_cast<Argument::DataType::StringListType*>(arg2->getArgument())->size(), 1);
+
+  ASSERT_EQ(*reinterpret_cast<Argument::DataType::SignedIntType*>(provided_arguments.at(2)->getArgument()), 43);
+
+  ASSERT_TRUE(arg1->providedByUser());
+  ASSERT_TRUE(arg2->providedByUser());
+  ASSERT_TRUE(arg3->providedByUser());
+}
