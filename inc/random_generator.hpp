@@ -71,7 +71,7 @@ namespace ns_random
       result.resize(output_length);
       for (long l{}; l < output_length; l++)
       {
-        result.at(l) = alphabet.at(random_engine_->getNumber()%(alphabet.size()-1));
+        result.at(l) = alphabet.at(random_engine_->getNumber()%(alphabet.size()));
       }
       return result;
     }
