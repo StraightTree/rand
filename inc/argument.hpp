@@ -86,6 +86,8 @@ public:
 
   void setProvidedByUser();
 
+  void initialize();
+
   friend std::ostream& operator<<(std::ostream& os, const Argument& arg)
   {
     os << '-' << arg.getBrief() << " -" << arg.getVerbose() << ' ' << arg.getDescription() << ' ';

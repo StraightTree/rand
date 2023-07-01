@@ -83,4 +83,42 @@ void Argument::setProvidedByUser()
   provided_by_user_ = true;
 }
 
+void Argument::initialize()
+{
+  provided_by_user_ = false;
+  switch (arg_type_)
+  {
+    case ArgumentType::kBool:
+    {
+      *reinterpret_cast<DataType::BoolType*>(arg_) = false;
+      break;
+    }
+    case ArgumentType::kSignedInteger:
+    {
+      *reinterpret_cast<DataType::SignedIntType *>(arg_) = 0;
+      break;
+    }
+    case ArgumentType::kUnsignedInteger:
+    {
+      *reinterpret_cast<DataType::UnsignedIntType *>(arg_) = 0;
+      break;
+    }
+    case ArgumentType::kFloat:
+    {
+      *reinterpret_cast<DataType::FloatType *>(arg_) = 0.0;
+      break;
+    }
+    case ArgumentType::kString:
+    {
+      *reinterpret_cast<DataType::StringType *>(arg_) = "";
+      break;
+    }
+    case ArgumentType::kStringList:
+    {
+      reinterpret_cast<DataType::StringListType *>(arg_)->clear();
+      break;
+    }
+  }
+}
+
 
