@@ -383,6 +383,20 @@ TEST(RandTest, TestStringLengthSpecifiedFlagsSpecified)
   }
 }
 
+TEST(RandTest, TestStringLengthSpecifiedFlagsSpecifiedNegativeLength)
+{
+  const std::string kTerminalArgs{"-s ul -l -12"};
+  auto rand = Rand{};
+  constexpr short kIterations{250};
+
+  for (short i{}; i < kIterations; i++)
+  {
+    std::string output{};
+    ASSERT_THROW(output = rand.run(kTerminalArgs), std::invalid_argument);
+    ASSERT_EQ(output.length(), 0);
+  }
+}
+
 TEST(RandTest, TestInvalidFlagBrief)
 {
   const std::string kTerminalArgs{"-y sdf"};
