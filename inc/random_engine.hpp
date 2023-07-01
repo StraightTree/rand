@@ -8,7 +8,7 @@
 template<typename T>
 class AbstractRandomEngine
 {
-protected:
+public:
   virtual T getNumber() = 0;
 };
 

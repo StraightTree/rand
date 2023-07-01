@@ -3,6 +3,7 @@
 #include <utility>
 #include <string>
 #include <vector>
+#include <ostream>
 
 class Argument
 {
@@ -84,5 +85,13 @@ public:
   [[nodiscard]] bool providedByUser() const;
 
   void setProvidedByUser();
+
+  void initialize();
+
+  friend std::ostream& operator<<(std::ostream& os, const Argument& arg)
+  {
+    os << '-' << arg.getBrief() << " -" << arg.getVerbose() << ' ' << arg.getDescription() << ' ';
+    return os;
+  }
 };
 
