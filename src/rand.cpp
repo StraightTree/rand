@@ -157,10 +157,10 @@ ns_random::Parameter Rand::buildParameterFromArguments()
 std::string Rand::printHelpText() const
 {
   std::stringstream ss{};
-   ss << argument_help_ << std::endl
-      << argument_random_number_ << std::endl
-      << argument_random_string_ << std::endl
-      << argument_length_ << std::endl;
+   ss << *argument_help_ << std::endl
+      << *argument_random_number_ << std::endl
+      << *argument_random_string_ << std::endl
+      << *argument_length_ << std::endl;
 
    return ss.str();
 }

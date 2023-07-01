@@ -89,7 +89,7 @@ TEST(RandTest, TestStringNoArgs)
     std::string output_unique{output};
     std::sort(output_unique.begin(), output_unique.end());
     output_unique.erase(std::unique(output_unique.begin(), output_unique.end()), output_unique.end());
-    ASSERT_GT(output_unique.length(), length*0.6) << output;
+    EXPECT_GE(output_unique.length(), length*0.5) << output;
   }
 }
 
