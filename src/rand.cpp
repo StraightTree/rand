@@ -45,11 +45,17 @@ std::string Rand::handleUserInput()
   auto random_engine = std::make_shared<UniformRandomEngine<ssize_t>>();
   auto random_generator = ns_random::Generator<ssize_t>(random_engine);
 
-  const Argument::DataType::UnsignedIntType kNumberOfResults{*reinterpret_cast<Argument::DataType::UnsignedIntType *>(argument_number_of_outputs_->getArgument())};
-  std::vector<std::string> output_list{};
-  output_list.reserve(kNumberOfResults);
+  Argument::DataType::UnsignedIntType number_of_results{kDefaultNumberOfOutputs};
+  if (argument_number_of_outputs_->providedByUser())
+    number_of_results = *reinterpret_cast<Argument::DataType::UnsignedIntType *>(argument_number_of_outputs_->getArgument());
 
-  for (auto i = 0; i < kNumberOfResults; i++)
+  if (number_of_results <= 0)
+    throw std::invalid_argument("Invalid argument for parameter '-n'!");
+
+  std::vector<std::string> output_list{};
+  output_list.reserve(number_of_results);
+
+  for (auto i = 0; i < number_of_results; i++)
   {
     output_list.emplace_back(random_generator.generate(parameter));
   }
@@ -178,9 +184,11 @@ std::string Rand::printHelpText() const
 std::string Rand::formatResult(const std::vector<std::string>& output_list) const
 {
   std::stringstream ss{};
+  auto remaining_entries{output_list.size()};
   for (const auto& kString : output_list)
   {
-    ss << kString << kFormatStringDelimiter.data();
+    const bool kLastElement = (--remaining_entries == 0);
+    ss << kString << (kLastElement ? "" : kFormatStringDelimiter.data());
   }
   return ss.str();
 }
