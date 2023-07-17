@@ -21,14 +21,18 @@ public:
 private:
   [[nodiscard]] std::string printHelpText() const;
   [[nodiscard]] std::string handleUserInput();
+  std::string formatResult(const std::vector<std::string>& output_list) const;
 
   static constexpr Argument::DataType::UnsignedIntType kDefaultStringLength{20};
+  static constexpr Argument::DataType::UnsignedIntType kDefaultNumberOfOutputs{1};
+  static constexpr std::array<const char, 1> kFormatStringDelimiter{'\n'};
 
   std::vector<std::shared_ptr<Argument>> supported_args_{};
   Argument::DataType::BoolType arg_print_help_text_{};
   Argument::DataType::StringListType arg_random_number_in_range_{};
   Argument::DataType::StringType arg_random_string_flag_{};
   Argument::DataType::UnsignedIntType arg_output_length_{kDefaultStringLength};
+  Argument::DataType::UnsignedIntType  arg_number_of_outputs_{kDefaultNumberOfOutputs};
 
   //Help-Text
   std::shared_ptr<Argument> argument_help_{std::make_shared<Argument>("h", "help", "Prints this help text", arg_print_help_text_)};
@@ -41,4 +45,7 @@ private:
 
   //Length
   std::shared_ptr<Argument> argument_length_{std::make_shared<Argument>("l", "length", "Limits the output to n character. Usage -l n", arg_output_length_)};
+
+  //Numerous
+  std::shared_ptr<Argument> argument_number_of_outputs_{std::make_shared<Argument>("n", "numerous", "Generates k different results. Usage -n k", arg_number_of_outputs_)};
 };

@@ -16,6 +16,7 @@ Rand::Rand()
   supported_args_.emplace_back(argument_random_number_);
   supported_args_.emplace_back(argument_random_string_);
   supported_args_.emplace_back(argument_length_);
+  supported_args_.emplace_back(argument_number_of_outputs_);
 }
 
 void Rand::runInTerminal(const std::string& terminal_args)
@@ -44,7 +45,22 @@ std::string Rand::handleUserInput()
   auto random_engine = std::make_shared<UniformRandomEngine<ssize_t>>();
   auto random_generator = ns_random::Generator<ssize_t>(random_engine);
 
-  return random_generator.generate(parameter);
+  Argument::DataType::UnsignedIntType number_of_results{kDefaultNumberOfOutputs};
+  if (argument_number_of_outputs_->providedByUser())
+    number_of_results = *reinterpret_cast<Argument::DataType::UnsignedIntType *>(argument_number_of_outputs_->getArgument());
+
+  if (number_of_results <= 0)
+    throw std::invalid_argument("Invalid argument for parameter '-n'!");
+
+  std::vector<std::string> output_list{};
+  output_list.reserve(number_of_results);
+
+  for (auto i = 0; i < number_of_results; i++)
+  {
+    output_list.emplace_back(random_generator.generate(parameter));
+  }
+
+  return formatResult(output_list);
 }
 
 ns_random::Parameter Rand::buildParameterFromArguments()
@@ -157,10 +173,22 @@ ns_random::Parameter Rand::buildParameterFromArguments()
 std::string Rand::printHelpText() const
 {
   std::stringstream ss{};
-   ss << *argument_help_ << std::endl
-      << *argument_random_number_ << std::endl
-      << *argument_random_string_ << std::endl
-      << *argument_length_ << std::endl;
+  for (const auto& kArg : supported_args_)
+  {
+    ss << *kArg << std::endl;
+  }
 
-   return ss.str();
+  return ss.str();
+}
+
+std::string Rand::formatResult(const std::vector<std::string>& output_list) const
+{
+  std::stringstream ss{};
+  auto remaining_entries{output_list.size()};
+  for (const auto& kString : output_list)
+  {
+    const bool kLastElement = (--remaining_entries == 0);
+    ss << kString << (kLastElement ? "" : kFormatStringDelimiter.data());
+  }
+  return ss.str();
 }

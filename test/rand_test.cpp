@@ -3,6 +3,7 @@
 //
 #include "gtest/gtest.h"
 #include "../inc/rand.hpp"
+#include "../inc/utility.hpp"
 
 TEST(RandTest, TestRandomWithoutRange)
 {
@@ -425,4 +426,111 @@ TEST(RandTest, TestInvalidFlagVerbose)
     ASSERT_THROW(output = rand.run(kTerminalArgs), std::invalid_argument);
     ASSERT_EQ(output.length(), 0);
   }
+}
+
+TEST(RandTest, TestNumerousMissingParameter)
+{
+  const std::string kTerminalArgs{"-r -n"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_THROW(output = rand.run(kTerminalArgs), std::invalid_argument);
+  ASSERT_TRUE(output.empty());
+}
+
+TEST(RandTest, TestNumerousMissingFlag)
+{
+  const std::string kTerminalArgs{"-n 43"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_THROW(output = rand.run(kTerminalArgs), std::invalid_argument);
+  ASSERT_TRUE(output.empty());
+}
+
+TEST(RandTest, TestNumerousNumbersValid)
+{
+  const std::string kTerminalArgs{"-r -n 12"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_NO_THROW(output = rand.run(kTerminalArgs));
+  ASSERT_FALSE(output.empty());
+
+  short new_line_count{};
+  for (const auto& kChar : output)
+  {
+    ASSERT_TRUE(std::isdigit(kChar) || kChar == '\n') << kChar;
+    if (kChar == '\n')
+      new_line_count++;
+  }
+  ASSERT_EQ(new_line_count, 11);
+}
+
+TEST(RandTest, TestNumerousNumbersNegativ)
+{
+  const std::string kTerminalArgs{"-r -n -2"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_THROW(output = rand.run(kTerminalArgs), std::invalid_argument);
+}
+
+TEST(RandTest, TestNumerousStringValid)
+{
+  const std::string kTerminalArgs{"-s u -n 12"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_NO_THROW(output = rand.run(kTerminalArgs));
+  ASSERT_FALSE(output.empty());
+
+  short new_line_count{};
+  for (const auto& kChar : output)
+  {
+    ASSERT_TRUE(std::isupper(kChar) || kChar == '\n') << kChar;
+    if (kChar == '\n')
+      new_line_count++;
+  }
+  ASSERT_EQ(new_line_count, 11);
+}
+
+TEST(RandTest, TestManyArguments)
+{
+  const std::string kTerminalArgs{"-s ul -l 20 -n 12"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_NO_THROW(output = rand.run(kTerminalArgs));
+  ASSERT_FALSE(output.empty());
+
+  std::vector<std::string> token{};
+  util::splitStringByDelimiter(output, '\n', token);
+
+  ASSERT_EQ(token.size(), 12);
+  std::for_each(token.begin(), token.end(), [](const std::string& str){ASSERT_EQ(str.length(), 20);});
+}
+
+TEST(RandTest, TestManyArgumentsDifferentOrder)
+{
+  const std::string kTerminalArgs{"-n 12 -s ul -l 20"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_NO_THROW(output = rand.run(kTerminalArgs));
+  ASSERT_FALSE(output.empty());
+
+  std::vector<std::string> token{};
+  util::splitStringByDelimiter(output, '\n', token);
+
+  ASSERT_EQ(token.size(), 12);
+  std::for_each(token.begin(), token.end(), [](const std::string& str){ASSERT_EQ(str.length(), 20);});
+}
+
+TEST(RandTest, TestNumerousNumbersValidHugeCount)
+{
+  const std::string kTerminalArgs{"-r -n 42343"};
+  auto rand = Rand{};
+  std::string output{};
+  ASSERT_NO_THROW(output = rand.run(kTerminalArgs));
+  ASSERT_FALSE(output.empty());
+
+  std::vector<std::string> token{};
+  util::splitStringByDelimiter(output, '\n', token);
+
+  ASSERT_EQ(token.size(), 42343);
+  std::for_each(token.begin(), token.end(), [](const std::string& str){ASSERT_GE(str.length(), 1);});
 }
