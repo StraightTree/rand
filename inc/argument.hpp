@@ -90,7 +90,7 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Argument& arg)
   {
-    os << '-' << arg.getBrief() << " -" << arg.getVerbose() << ' ' << arg.getDescription() << ' ';
+    os << '-' << arg.getBrief() << " --" << arg.getVerbose() << " ... " << arg.getDescription() << ' ';
     return os;
   }
 };
