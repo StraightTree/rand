@@ -16,6 +16,7 @@ Rand::Rand()
   supported_args_.emplace_back(argument_random_number_);
   supported_args_.emplace_back(argument_random_string_);
   supported_args_.emplace_back(argument_length_);
+  supported_args_.emplace_back(argument_number_of_outputs_);
 }
 
 void Rand::runInTerminal(const std::string& terminal_args)
@@ -44,7 +45,16 @@ std::string Rand::handleUserInput()
   auto random_engine = std::make_shared<UniformRandomEngine<ssize_t>>();
   auto random_generator = ns_random::Generator<ssize_t>(random_engine);
 
-  return random_generator.generate(parameter);
+  const Argument::DataType::UnsignedIntType kNumberOfResults{*reinterpret_cast<Argument::DataType::UnsignedIntType *>(argument_number_of_outputs_->getArgument())};
+  std::vector<std::string> output_list{};
+  output_list.reserve(kNumberOfResults);
+
+  for (auto i = 0; i < kNumberOfResults; i++)
+  {
+    output_list.emplace_back(random_generator.generate(parameter));
+  }
+
+  return formatResult(output_list);
 }
 
 ns_random::Parameter Rand::buildParameterFromArguments()
@@ -157,10 +167,20 @@ ns_random::Parameter Rand::buildParameterFromArguments()
 std::string Rand::printHelpText() const
 {
   std::stringstream ss{};
-   ss << *argument_help_ << std::endl
-      << *argument_random_number_ << std::endl
-      << *argument_random_string_ << std::endl
-      << *argument_length_ << std::endl;
+  for (const auto& kArg : supported_args_)
+  {
+    ss << *kArg << std::endl;
+  }
 
-   return ss.str();
+  return ss.str();
+}
+
+std::string Rand::formatResult(const std::vector<std::string>& output_list) const
+{
+  std::stringstream ss{};
+  for (const auto& kString : output_list)
+  {
+    ss << kString << kFormatStringDelimiter.data();
+  }
+  return ss.str();
 }
