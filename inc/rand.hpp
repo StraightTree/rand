@@ -25,7 +25,7 @@ private:
 
   static constexpr Argument::DataType::UnsignedIntType kDefaultStringLength{20};
   static constexpr Argument::DataType::UnsignedIntType kDefaultNumberOfOutputs{1};
-  static constexpr const char kFormatStringDelimiter{'X'};
+  static constexpr const char kFormatStringDelimiter{'\n'};
 
   std::vector<std::shared_ptr<Argument>> supported_args_{};
   Argument::DataType::BoolType arg_print_help_text_{};
