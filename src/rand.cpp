@@ -185,8 +185,6 @@ std::string Rand::formatResult(const std::vector<std::string>& output_list) cons
 {
   std::stringstream ss{};
   auto remaining_entries{output_list.size()};
-  std::cout << "output size: " << output_list.size() << std::endl;
-  std::cout << "String delimiter: " << kFormatStringDelimiter << std::endl;
   for (const auto& kString : output_list)
   {
     const bool kLastElement = (--remaining_entries == 0);

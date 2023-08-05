@@ -455,7 +455,6 @@ TEST(RandTest, TestNumerousNumbersValid)
   ASSERT_FALSE(output.empty());
 
   short new_line_count{};
-  std::cout << output << std::endl;
   for (const auto& kChar : output)
   {
     ASSERT_TRUE(std::isdigit(kChar) || kChar == '\n') << kChar;
