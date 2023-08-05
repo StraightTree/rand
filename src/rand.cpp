@@ -188,7 +188,9 @@ std::string Rand::formatResult(const std::vector<std::string>& output_list) cons
   for (const auto& kString : output_list)
   {
     const bool kLastElement = (--remaining_entries == 0);
-    ss << kString << (kLastElement ? "" : kFormatStringDelimiter.data());
+    ss << kString;
+    if (!kLastElement)
+      ss << kFormatStringDelimiter;
   }
   return ss.str();
 }

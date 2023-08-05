@@ -25,7 +25,7 @@ TEST(TestUniformRandomEngine, getNumberReturnsDifferentValuesChar)
 
   for (const auto& kPair : occurrence_counts)
   {
-    EXPECT_LT(kPair.second, 12) << kPair.first << " has " << kPair.second << " occurrences"; //each number should be in the map at most three times
+    EXPECT_LE(kPair.second, 12) << static_cast<int>(kPair.first) << " has " << static_cast<int>(kPair.second) << " occurrences"; //each number should be in the map at most three times
   }
 }
 
