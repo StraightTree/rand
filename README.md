@@ -1,8 +1,6 @@
 # rand
 An awesome random generator for the terminal.
 
-:warning: **Which is currently in the developing process.** Please watch this repository to get informed when the first release is available.
-
 # Outline
 A more detailed description can be found on the wiki-page.
 The basic idea is to create a versatile random generator for the terminal.
